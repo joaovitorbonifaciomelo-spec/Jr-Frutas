@@ -1,11 +1,10 @@
-import { site, whatsappLink } from "@/data/site";
+import { quoteWhatsappLink } from "@/data/site";
 import { ButtonLink } from "@/components/ui/Button";
 import { Phone, WhatsApp } from "@/components/ui/Icons";
 import { Reveal } from "@/components/ui/Reveal";
 
 /** Bloco de conversão final — apenas mobile/tablet (como na referência mobile). */
 export function MobileCta() {
-  const hasWhatsApp = Boolean(site.whatsapp); // sem WhatsApp geral → CTA aponta para o atendimento por unidade (/links)
   return (
     <section className="bg-black text-white lg:hidden">
       <div className="container-site pb-14">
@@ -17,19 +16,12 @@ export function MobileCta() {
             </p>
           </div>
           <div className="mt-5 flex flex-col gap-3 sm:mt-0 sm:w-[260px] sm:shrink-0">
-            <ButtonLink href="#cotacao" size="lg" full icon={<WhatsApp size={18} />}>
+            {/* cotação → WhatsApp Goiânia · atendimento por unidade → /links */}
+            <ButtonLink href={quoteWhatsappLink()} target="_blank" rel="noopener" size="lg" full icon={<WhatsApp size={18} />}>
               Solicitar cotação
             </ButtonLink>
-            <ButtonLink
-              href={hasWhatsApp ? whatsappLink("Olá! Gostaria de falar com a equipe da JR Frutas.") : "/links"}
-              variant="outline-white"
-              size="lg"
-              full
-              icon={hasWhatsApp ? <WhatsApp size={18} /> : <Phone size={18} />}
-              target={hasWhatsApp ? "_blank" : undefined}
-              rel={hasWhatsApp ? "noopener" : undefined}
-            >
-              {hasWhatsApp ? "Falar no WhatsApp" : "Falar com a JR Frutas"}
+            <ButtonLink href="/links" variant="outline-white" size="lg" full icon={<Phone size={18} />}>
+              Falar com a JR Frutas
             </ButtonLink>
           </div>
         </Reveal>

@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { nav, products, site, units, whatsappLink } from "@/data/site";
+import Image from "next/image";
+import { developerCredit, nav, products, quoteWhatsappLink, site, units } from "@/data/site";
 import { ButtonLink } from "@/components/ui/Button";
 import { Logo } from "@/components/ui/Logo";
 import { Facebook, Instagram, WhatsApp } from "@/components/ui/Icons";
@@ -57,7 +58,7 @@ export function Footer() {
             <p className="text-[0.9rem] leading-relaxed text-white/70">
               Fale com nosso time e receba sua proposta.
             </p>
-            <ButtonLink href="#cotacao" className="mt-6">
+            <ButtonLink href={quoteWhatsappLink()} target="_blank" rel="noopener" className="mt-6">
               Solicitar cotação
             </ButtonLink>
             <p className="mt-6 text-[0.8rem] text-white/50">Produtos: {products.map((p) => p.name).join(" · ")}</p>
@@ -70,6 +71,7 @@ export function Footer() {
             Política de Privacidade
           </Link>
         </div>
+        <DeveloperCredit className="mt-6 border-t border-white/10 pt-5" />
       </div>
 
       {/* ---------- MOBILE (muito mais simples) ---------- */}
@@ -88,6 +90,7 @@ export function Footer() {
           <p>© {year} {site.name}. Todos os direitos reservados.</p>
           <Link href="/politica-de-privacidade">Política de Privacidade</Link>
         </div>
+        <DeveloperCredit className="mt-6 border-t border-white/10 pt-5" center />
       </div>
     </footer>
   );
@@ -104,9 +107,40 @@ function Social({ className = "" }: { className?: string }) {
       <a href={site.social.facebook.href} aria-label="Facebook" data-pending={site.social.facebook.pending ? "" : undefined} className={item} target="_blank" rel="noopener">
         <Facebook size={17} />
       </a>
-      {site.whatsapp ? (
-        <a href={whatsappLink()} aria-label="WhatsApp" className={item} target="_blank" rel="noopener">
-          <WhatsApp size={17} />
+      <a href={quoteWhatsappLink()} aria-label="WhatsApp" className={item} target="_blank" rel="noopener">
+        <WhatsApp size={17} />
+      </a>
+    </div>
+  );
+}
+
+/**
+ * Crédito do desenvolvedor — discreto, mas perceptível. Dados em `developerCredit`
+ * (site.ts): com `logo` definido renderiza a logo; com `instagram` vira link.
+ */
+function DeveloperCredit({ className = "", center = false }: { className?: string; center?: boolean }) {
+  const { name, instagram, logo, logoWidth, logoHeight } = developerCredit;
+  const href = instagram ? `https://www.instagram.com/${instagram}/` : null;
+  const content = logo ? (
+    <Image src={logo} alt={name} width={logoWidth} height={logoHeight} className="h-6 w-auto opacity-80 transition-opacity hover:opacity-100" />
+  ) : (
+    <span className="font-display text-[0.78rem] font-bold tracking-[0.02em] text-white/80">{name}</span>
+  );
+  return (
+    <div className={`flex items-center gap-3 text-[0.72rem] text-white/45 ${center ? "flex-col justify-center text-center" : "justify-between"} ${className}`}>
+      <span className="inline-flex items-center gap-2">
+        <span>Desenvolvido por</span>
+        {href ? (
+          <a href={href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 transition-colors hover:text-white">
+            {content}
+          </a>
+        ) : (
+          content
+        )}
+      </span>
+      {href ? (
+        <a href={href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 transition-colors hover:text-white">
+          <Instagram size={13} /> @{instagram}
         </a>
       ) : null}
     </div>

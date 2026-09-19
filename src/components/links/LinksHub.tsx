@@ -102,7 +102,7 @@ export function LinksHub() {
               <WhatsApp size={23} />
             </span>
             <span className="min-w-0 flex-1">
-              <span className="block text-[1.08rem] font-extrabold leading-tight tracking-[-0.01em]">WhatsApp</span>
+              <span className="block font-display text-[1.08rem] font-extrabold leading-tight tracking-[-0.01em]">WhatsApp</span>
               <span className="block text-[0.82rem] text-black/60">Escolha sua unidade</span>
             </span>
             <ArrowRight size={20} className="shrink-0 transition-transform duration-200 group-hover:translate-x-0.5 group-active:translate-x-1" />
@@ -122,7 +122,7 @@ export function LinksHub() {
               rel="noopener"
               onClick={() => track("hub_instagram")}
               data-pending={ig.pending ? "" : undefined}
-              className="glass-chip flex h-11 items-center gap-2 rounded-full px-4 text-[0.82rem] font-bold text-white transition-[background-color,color] duration-200 hover:bg-white hover:text-black active:bg-white active:text-black"
+              className="glass-chip flex h-11 items-center gap-2 rounded-full px-4 font-display text-[0.82rem] font-bold text-white transition-[background-color,color] duration-200 hover:bg-white hover:text-black active:bg-white active:text-black"
             >
               <Instagram size={17} />
               {ig.handle ? `@${ig.handle}` : "Instagram"}
@@ -147,7 +147,7 @@ export function LinksHub() {
             const wa = unitWhatsappLink(u, waMessage(u.city)); // null se o WhatsApp da unidade não estiver cadastrado
             return (
               <li key={u.id} className="rounded-[14px] border border-white/10 bg-white/[0.04] p-4">
-                <p className="text-[1.02rem] font-extrabold leading-tight">{u.name}</p>
+                <p className="font-display text-[1.02rem] font-extrabold leading-tight">{u.name}</p>
                 <p className="mt-1 text-[0.88rem] text-white/70">{u.phone}</p>
                 {/* WhatsApp (wa.me) é a ação principal quando `units[].whatsapp` estiver confirmado;
                     enquanto não estiver, a única ação é ligar para o fixo (nunca wa.me com o fixo). */}
@@ -186,7 +186,7 @@ export function LinksHub() {
         <ul className="flex flex-col gap-3">
           {units.map((u) => (
             <li key={u.id} className="rounded-[14px] border border-white/10 bg-white/[0.04] p-4">
-              <p className="text-[1.02rem] font-extrabold leading-tight">{u.name}</p>
+              <p className="font-display text-[1.02rem] font-extrabold leading-tight">{u.name}</p>
               <p className="mt-1 text-[0.88rem] leading-snug text-white/70" data-pending={u.addressPending ? "" : undefined}>
                 {u.address}
               </p>
@@ -249,7 +249,7 @@ function Shortcut({
     <>
       <span className="grid size-11 shrink-0 place-items-center rounded-full border border-white/22 bg-white/[0.06] text-white">{icon}</span>
       <span className="min-w-0 flex-1">
-        <span className="block text-[1.02rem] font-extrabold leading-tight tracking-[-0.01em]">{title}</span>
+        <span className="block font-display text-[1.02rem] font-extrabold leading-tight tracking-[-0.01em]">{title}</span>
         <span className="block text-[0.82rem] text-white/65">{copy}</span>
       </span>
       <ArrowRight size={20} className="shrink-0 text-white/80 transition-transform duration-200 group-hover:translate-x-0.5 group-active:translate-x-1" />

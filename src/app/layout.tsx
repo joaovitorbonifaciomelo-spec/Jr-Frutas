@@ -1,17 +1,34 @@
 import type { Metadata, Viewport } from "next";
 import { Nunito } from "next/font/google";
+import localFont from "next/font/local";
 import { site, units } from "@/data/site";
 import "./globals.css";
 
 /**
- * Tipografia: Marine Rounded não está disponível nos assets do projeto.
- * Nunito (Google Fonts, arredondada/geométrica) é a alternativa mais próxima.
- * Para trocar por Marine Rounded, use next/font/local apontando para os
- * arquivos da fonte e mantenha a variável --font-nunito.
+ * Tipografia
+ * - DISPLAY (identidade): Marine Rounded, self-hosted em /public/fonts via
+ *   next/font/local — só os pesos usados (400 Regular, 700 Bold, 900 Black).
+ *   Pesos 600/800 pedidos pelo CSS resolvem para 700/900 pela regra de
+ *   matching do navegador (sem bold sintético). Fallback com métricas ajustadas.
+ * - BODY (textos longos): Nunito, mantida pela legibilidade em corpo de texto.
+ * As famílias entram no Tailwind como --font-display / --font-body (globals.css).
  */
+const marine = localFont({
+  src: [
+    { path: "../../public/fonts/MarineRounded-Regular.otf", weight: "400", style: "normal" },
+    { path: "../../public/fonts/MarineRounded-Bold.otf", weight: "700", style: "normal" },
+    { path: "../../public/fonts/MarineRounded-Black.otf", weight: "900", style: "normal" },
+  ],
+  variable: "--font-marine",
+  display: "swap",
+  preload: true,
+  adjustFontFallback: "Arial",
+  fallback: ["Nunito", "ui-rounded", "system-ui", "sans-serif"],
+});
+
 const nunito = Nunito({
   subsets: ["latin", "latin-ext"],
-  weight: ["400", "600", "700", "800"],
+  weight: ["400", "600", "700"],
   variable: "--font-nunito",
   display: "swap",
 });
@@ -61,7 +78,7 @@ const jsonLd = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="pt-BR" className={nunito.variable} data-env={process.env.NODE_ENV}>
+    <html lang="pt-BR" className={`${marine.variable} ${nunito.variable}`} data-env={process.env.NODE_ENV}>
       <head>
         {/* Marca que há JS antes do primeiro paint (habilita o reveal sem esconder conteúdo sem JS) */}
         <script dangerouslySetInnerHTML={{ __html: "document.documentElement.setAttribute('data-js','')" }} />

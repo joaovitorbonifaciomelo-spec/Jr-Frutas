@@ -50,7 +50,7 @@ export function Accordion({ items, tone = "dark", defaultOpen = null, className 
             >
               {item.leading ? <span className="shrink-0">{item.leading}</span> : null}
               <span className="min-w-0 flex-1">
-                <span className="block text-[0.98rem] font-extrabold leading-snug sm:text-[1.02rem]">{item.title}</span>
+                <span className="block font-display text-[0.98rem] font-extrabold leading-snug sm:text-[1.02rem]">{item.title}</span>
                 {item.subtitle ? <span className={`mt-0.5 block text-[0.86rem] leading-snug ${sub}`}>{item.subtitle}</span> : null}
               </span>
               <Plus

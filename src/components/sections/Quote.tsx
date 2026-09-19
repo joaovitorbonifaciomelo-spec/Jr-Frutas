@@ -3,27 +3,25 @@
 import Image from "next/image";
 import { useState, type FormEvent } from "react";
 import melancia from "@/assets/images/melancia-fatia.webp";
-import { productOptions, site, units, whatsappLink } from "@/data/site";
+import { productOptions, QUOTE_MESSAGE, quoteWhatsappLink } from "@/data/site";
 import { Button, ButtonLink } from "@/components/ui/Button";
-import { Phone, WhatsApp } from "@/components/ui/Icons";
+import { WhatsApp } from "@/components/ui/Icons";
 import { Reveal } from "@/components/ui/Reveal";
 
 const field =
   "w-full rounded-[var(--radius-btn)] border border-white/22 bg-white/[0.04] px-4 text-[0.92rem] text-white placeholder:text-white/40 transition-[border-color,background-color] duration-300 focus:border-white focus:bg-white/[0.07] focus:outline-none";
-const label = "mb-1.5 block text-[0.72rem] font-bold uppercase tracking-[0.12em] text-white/80";
+const label = "mb-1.5 block font-display text-[0.72rem] font-bold uppercase tracking-[0.12em] text-white/80";
 
 export function Quote() {
-  const hasWhatsApp = Boolean(site.whatsapp); // sem WhatsApp geral → CTA aponta para o atendimento por unidade (/links)
   const [more, setMore] = useState(false);
   const [sent, setSent] = useState(false);
-  const [copied, setCopied] = useState(false);
 
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const fd = new FormData(e.currentTarget);
     const get = (k: string) => String(fd.get(k) ?? "").trim();
     const lines = [
-      "Olá! Gostaria de solicitar uma cotação.",
+      QUOTE_MESSAGE,
       "",
       `*Nome:* ${get("nome")}`,
       `*WhatsApp:* ${get("whatsapp")}`,
@@ -32,13 +30,8 @@ export function Quote() {
       `*Produto de interesse:* ${get("produto")}`,
       get("mensagem") && `*Mensagem:* ${get("mensagem")}`,
     ].filter(Boolean);
-    const text = lines.join("\n");
-    if (hasWhatsApp) {
-      window.open(whatsappLink(text), "_blank", "noopener");
-    } else {
-      // sem WhatsApp geral: copia a solicitação e orienta a ligar para a unidade
-      navigator.clipboard?.writeText(text.replace(/\*/g, "")).then(() => setCopied(true)).catch(() => setCopied(false));
-    }
+    // cotação → WhatsApp da Unidade Goiânia com a solicitação preenchida
+    window.open(quoteWhatsappLink(lines.join("\n")), "_blank", "noopener");
     setSent(true);
   }
 
@@ -152,41 +145,16 @@ export function Quote() {
                   <Button type="submit" size="lg" full>
                     Enviar solicitação
                   </Button>
-                  {hasWhatsApp ? (
-                    <p className="mt-3 text-center text-[0.78rem] text-white/50">
-                      {sent
-                        ? "Sua solicitação foi aberta no WhatsApp. Se a janela não abriu, use o botão abaixo."
-                        : "Ao enviar, sua solicitação é encaminhada para o WhatsApp da nossa equipe."}
-                    </p>
-                  ) : sent ? (
-                    <div className="mt-4 rounded-[var(--radius-btn)] border border-white/20 p-4 text-center text-[0.86rem] text-white/80" role="status">
-                      <p>{copied ? "Solicitação copiada. " : ""}Fale com a unidade mais próxima:</p>
-                      <ul className="mt-2 flex flex-col gap-1 sm:flex-row sm:justify-center sm:gap-6">
-                        {units.map((u) => (
-                          <li key={u.id}>
-                            <a href={`tel:${u.phoneE164}`} className="inline-flex items-center gap-2 font-bold text-white underline-offset-4 hover:underline">
-                              <Phone size={15} /> {u.city} · {u.phone}
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ) : (
-                    <p className="mt-3 text-center text-[0.78rem] text-white/50">Atendimento por unidade: Goiânia e Brasília.</p>
-                  )}
+                  <p className="mt-3 text-center text-[0.78rem] text-white/50">
+                    {sent
+                      ? "Sua solicitação foi aberta no WhatsApp. Se a janela não abriu, use o botão abaixo."
+                      : "Ao enviar, sua solicitação é encaminhada para o WhatsApp da nossa equipe (Unidade Goiânia)."}
+                  </p>
                 </div>
 
                 <div className="sm:col-span-2 lg:hidden">
-                  <ButtonLink
-                    href={hasWhatsApp ? whatsappLink("Olá! Gostaria de solicitar uma cotação.") : "/links"}
-                    variant="outline-white"
-                    size="lg"
-                    full
-                    icon={hasWhatsApp ? <WhatsApp size={18} /> : <Phone size={18} />}
-                    target={hasWhatsApp ? "_blank" : undefined}
-                    rel={hasWhatsApp ? "noopener" : undefined}
-                  >
-                    {hasWhatsApp ? "Falar no WhatsApp" : "Falar com a JR Frutas"}
+                  <ButtonLink href={quoteWhatsappLink()} variant="outline-white" size="lg" full icon={<WhatsApp size={18} />} target="_blank" rel="noopener">
+                    Pedir cotação no WhatsApp
                   </ButtonLink>
                 </div>
               </form>

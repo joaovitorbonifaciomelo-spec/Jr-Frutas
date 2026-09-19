@@ -1,6 +1,15 @@
-import { processSteps } from "@/data/site";
+import { Boxes, ClipboardCheck, Tractor, Truck, type LucideIcon } from "lucide-react";
+import { processSteps, type ProcessStep } from "@/data/site";
 import { Accordion } from "@/components/ui/Accordion";
-import { ArrowRight, Icon } from "@/components/ui/Icons";
+import { ArrowRight } from "@/components/ui/Icons";
+
+/** Ícones das etapas: família única (Lucide), lineares, stroke 1.5, monocromáticos */
+const stepIcons: Record<ProcessStep["icon"], LucideIcon> = {
+  field: Tractor,
+  select: ClipboardCheck,
+  truck: Truck,
+  box: Boxes,
+};
 import { Reveal } from "@/components/ui/Reveal";
 
 export function Process() {
@@ -31,7 +40,7 @@ export function Process() {
               items={processSteps.map((s) => ({
                 leading: (
                   <span className="grid size-10 place-items-center rounded-full border border-white/30">
-                    <Icon name={s.icon} size={18} />
+                    <StepIcon icon={s.icon} size={18} />
                   </span>
                 ),
                 title: `${Number(s.number)}. ${s.title}`,
@@ -50,10 +59,10 @@ function Step({ step, index, last }: { step: (typeof processSteps)[number]; inde
   return (
     <>
       <Reveal as="li" delay={index * 90} className="flex flex-col items-center text-center">
-        <span className="text-[1.15rem] font-extrabold tracking-[-0.02em] text-white/90">{step.number}</span>
+        <span className="font-display text-[1.15rem] font-extrabold tracking-[-0.02em] text-white/90">{step.number}</span>
         <span className="eyebrow mt-2 text-white">{step.title}</span>
         <span className="mt-4 grid size-16 place-items-center rounded-full border border-white/25 text-white transition-[border-color,background-color] duration-300 hover:border-white/60">
-          <Icon name={step.icon} size={28} />
+          <StepIcon icon={step.icon} size={28} />
         </span>
         <p className="mt-4 max-w-[22ch] text-[0.84rem] leading-relaxed text-white/65">{step.description}</p>
       </Reveal>
@@ -64,4 +73,9 @@ function Step({ step, index, last }: { step: (typeof processSteps)[number]; inde
       ) : null}
     </>
   );
+}
+
+function StepIcon({ icon, size }: { icon: ProcessStep["icon"]; size: number }) {
+  const Cmp = stepIcons[icon];
+  return <Cmp size={size} strokeWidth={1.5} absoluteStrokeWidth aria-hidden />;
 }

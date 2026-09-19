@@ -2,16 +2,14 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { nav, site, units, whatsappLink } from "@/data/site";
+import { nav, quoteWhatsappLink, unitMessage, units, unitWhatsappLink } from "@/data/site";
 import { ButtonLink } from "@/components/ui/Button";
 import { Logo } from "@/components/ui/Logo";
-import { Close, Menu, Phone, WhatsApp } from "@/components/ui/Icons";
+import { ArrowRight, Close, Menu, WhatsApp } from "@/components/ui/Icons";
 
 export function Header() {
-  const hasWhatsApp = Boolean(site.whatsapp); // sem WhatsApp geral → CTA aponta para o atendimento por unidade (/links)
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const phone = units[0];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -36,17 +34,17 @@ export function Header() {
         scrolled ? "border-b border-white/10" : "border-b border-transparent"
       }`}
     >
-      <div className="container-site flex h-[72px] items-center justify-between gap-6 lg:h-[76px]">
+      <div className="container-site flex h-[72px] items-center justify-between gap-4 lg:h-[76px]">
         <Logo height={40} priority />
 
         {/* Navegação desktop */}
         <nav aria-label="Principal" className="hidden lg:block">
-          <ul className="flex items-center gap-8">
+          <ul className="flex items-center gap-5 xl:gap-5 2xl:gap-7">
             {nav.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="relative text-[0.8rem] font-bold tracking-[0.02em] text-white/85 transition-colors hover:text-white after:absolute after:-bottom-1.5 after:left-0 after:h-px after:w-0 after:bg-white after:transition-[width] after:duration-300 hover:after:w-full"
+                  className="relative font-display whitespace-nowrap text-[0.78rem] font-bold tracking-[0.02em] text-white/85 transition-colors hover:text-white after:absolute after:-bottom-1.5 after:left-0 after:h-px after:w-0 after:bg-white after:transition-[width] after:duration-300 hover:after:w-full"
                 >
                   {item.label}
                 </Link>
@@ -55,19 +53,16 @@ export function Header() {
           </ul>
         </nav>
 
-        <div className="hidden items-center gap-5 lg:flex">
-          <a
-            href={`tel:${phone.phone.replace(/\D/g, "")}`}
-            data-pending={phone.phonePending ? "" : undefined}
-            title={phone.phonePending ? "Telefone pendente de confirmação" : undefined}
-            className="inline-flex items-center gap-2 text-[0.8rem] font-bold text-white/85 transition-colors hover:text-white"
-          >
-            <span className="grid size-8 place-items-center rounded-full border border-white/25">
-              <Phone size={14} />
-            </span>
-            {phone.phone}
-          </a>
-          <ButtonLink href="#cotacao" icon={false} className="h-11 px-5">
+        {/* Contatos das duas unidades (WhatsApp) + CTA de cotação (WhatsApp Goiânia) */}
+        <div className="hidden items-center gap-3 lg:flex xl:gap-4">
+          <ul className="hidden items-center gap-3 xl:flex 2xl:gap-4">
+            {units.map((u) => (
+              <li key={u.id}>
+                <UnitWhatsApp unit={u} compact />
+              </li>
+            ))}
+          </ul>
+          <ButtonLink href={quoteWhatsappLink()} target="_blank" rel="noopener" icon={false} className="h-11 px-4 2xl:px-5">
             Solicite uma cotação
           </ButtonLink>
         </div>
@@ -93,7 +88,7 @@ export function Header() {
           open ? "visible opacity-100" : "invisible opacity-0"
         }`}
       >
-        <div className="container-site flex h-full flex-col justify-between overflow-y-auto pt-6 pb-8">
+        <div className="container-site flex h-full flex-col justify-between overflow-y-auto pt-4 pb-8">
           <nav aria-label="Menu mobile">
             <ul className="divide-y divide-white/10 border-y border-white/10">
               {nav.map((item, i) => (
@@ -107,7 +102,7 @@ export function Header() {
                   <Link
                     href={item.href}
                     onClick={() => setOpen(false)}
-                    className="flex min-h-14 items-center justify-between py-3 text-[1.35rem] font-extrabold tracking-[-0.01em]"
+                    className="flex min-h-13 items-center justify-between py-2.5 font-display text-[1.25rem] font-extrabold tracking-[-0.01em]"
                   >
                     {item.label}
                     <span aria-hidden className="text-white/40">
@@ -120,32 +115,68 @@ export function Header() {
           </nav>
 
           <div
-            className={`mt-8 flex flex-col gap-3 transition-[opacity,transform] duration-500 ${
+            className={`mt-6 flex flex-col gap-3 transition-[opacity,transform] duration-500 ${
               open ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0"
             }`}
             style={{ transitionDelay: open ? "360ms" : "0ms" }}
           >
-            <ButtonLink href="#cotacao" size="lg" full onClick={() => setOpen(false)}>
+            {/* Unidades: nome + telefone + ação WhatsApp */}
+            <p className="eyebrow text-white/55">Unidades</p>
+            <ul className="flex flex-col gap-2">
+              {units.map((u) => (
+                <li key={u.id}>
+                  <UnitWhatsApp unit={u} onClick={() => setOpen(false)} />
+                </li>
+              ))}
+            </ul>
+            <ButtonLink href={quoteWhatsappLink()} target="_blank" rel="noopener" size="lg" full className="mt-2" onClick={() => setOpen(false)}>
               Solicitar cotação
             </ButtonLink>
-            <ButtonLink
-              href={hasWhatsApp ? whatsappLink("Olá! Gostaria de solicitar uma cotação.") : "/links"}
-              variant="outline-white"
-              size="lg"
-              full
-              icon={hasWhatsApp ? <WhatsApp size={18} /> : <Phone size={18} />}
-              target={hasWhatsApp ? "_blank" : undefined}
-              rel={hasWhatsApp ? "noopener" : undefined}
-              onClick={() => setOpen(false)}
-            >
-              {hasWhatsApp ? "Falar no WhatsApp" : "Falar com a JR Frutas"}
-            </ButtonLink>
-            <p className="mt-2 text-center text-[0.8rem] text-white/55">
-              {units.map((u) => u.city).join(" · ")}
-            </p>
           </div>
         </div>
       </div>
     </header>
+  );
+}
+
+/**
+ * Contato de unidade — bloco inteiro clicável, abre o WhatsApp da unidade
+ * com mensagem pré-preenchida. Preto/branco (sem verde).
+ */
+function UnitWhatsApp({ unit, compact, onClick }: { unit: (typeof units)[number]; compact?: boolean; onClick?: () => void }) {
+  const href = unitWhatsappLink(unit, unitMessage(unit.city)) ?? `tel:${unit.phoneE164}`;
+  return compact ? (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener"
+      aria-label={`WhatsApp ${unit.name}: ${unit.phone}`}
+      className="group inline-flex items-center gap-2 whitespace-nowrap rounded-lg text-white/85 transition-colors hover:text-white"
+    >
+      <span className="grid size-8 shrink-0 place-items-center rounded-full border border-white/25 transition-[background-color,color] duration-300 group-hover:bg-white group-hover:text-black">
+        <WhatsApp size={15} />
+      </span>
+      <span className="leading-tight">
+        <span className="block text-[0.58rem] font-bold uppercase tracking-[0.1em] text-white/55">{unit.name}</span>
+        <span className="block font-display text-[0.8rem] font-bold">{unit.phone}</span>
+      </span>
+    </a>
+  ) : (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener"
+      onClick={onClick}
+      className="flex min-h-14 items-center gap-3 rounded-[var(--radius-pill)] border border-white/18 px-4 py-3 text-white transition-colors hover:border-white/40"
+    >
+      <span className="grid size-10 shrink-0 place-items-center rounded-full bg-white text-black">
+        <WhatsApp size={18} />
+      </span>
+      <span className="min-w-0 flex-1 leading-tight">
+        <span className="block font-display text-[0.92rem] font-extrabold">{unit.name}</span>
+        <span className="block text-[0.82rem] text-white/70">{unit.phone} · WhatsApp</span>
+      </span>
+      <ArrowRight size={18} className="shrink-0 text-white/60" />
+    </a>
   );
 }

@@ -1,7 +1,10 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: var(--font-nunito), "Nunito", ui-rounded, system-ui, sans-serif;
+  /* body = Nunito (textos longos) · display = Marine Rounded (identidade) */
+  --font-body: var(--font-nunito), "Nunito", ui-rounded, system-ui, sans-serif;
+  --font-display: var(--font-marine), "Marine Rounded", var(--font-nunito), ui-rounded, system-ui, sans-serif;
+  --font-sans: var(--font-body);
 
   --color-ink: #050505;
   --color-ink-2: #0f0f0f;
@@ -54,6 +57,7 @@
   h1,
   h2,
   h3 {
+    font-family: var(--font-display);
     text-wrap: balance;
     letter-spacing: -0.02em;
   }
@@ -76,6 +80,7 @@
 }
 
 @utility eyebrow {
+  font-family: var(--font-display);
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.14em;
@@ -90,18 +95,21 @@
 }
 
 @utility h-display {
+  font-family: var(--font-display);
   font-size: clamp(2.35rem, 1.4rem + 3vw, 3.7rem);
   line-height: 1.02;
   font-weight: 800;
 }
 
 @utility h-section {
+  font-family: var(--font-display);
   font-size: clamp(1.7rem, 1.15rem + 1.8vw, 2.45rem);
   line-height: 1.08;
   font-weight: 800;
 }
 
 @utility h-card {
+  font-family: var(--font-display);
   font-size: clamp(1.15rem, 1rem + 0.5vw, 1.35rem);
   line-height: 1.15;
   font-weight: 800;

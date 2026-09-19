@@ -7,7 +7,7 @@
  * itens aparecem com contorno tracejado (ver globals.css → [data-pending]).
  *
  * Dados CONFIRMADOS nos arquivos do Grupo JR:
- * - Produtos principais: abacaxi, melancia, coco seco, coco verde (melão em sazonalidade)
+ * - Produtos: abacaxi, melancia, coco seco, coco verde e melão
  * - Unidade Goiânia: (62) 3522-9333 · Rodovia BR-153, Km 5,5, GP04, Box 06, Fazenda Retiro, CEASA
  * - Unidade Brasília: (61) 3974-6842 · SIA Trecho 10, Guará, Brasília - DF, 71200-100
  * - Instagram: @jr.frutas — https://www.instagram.com/jr.frutas/
@@ -58,18 +58,26 @@ export const site = {
  * Link para o WhatsApp geral. Como ele não existe hoje, retorna a âncora da
  * seção de contato do site (fallback interno, sem número inventado).
  */
+/**
+ * Crédito do desenvolvedor (faixa final do footer).
+ * - `instagram`: handle sem "@" — PENDENTE (não inventar). Sem valor, o nome aparece sem link.
+ * - `logo`: caminho em /public quando existir (ex.: "/brand/bonifacio.svg") — o footer
+ *   troca automaticamente o texto pela logo, sem reconstruir o componente.
+ */
+export const developerCredit = {
+  name: "Bonifácio Marketing Digital",
+  instagram: null as string | null, // PENDENTE: handle oficial
+  logo: null as string | null,
+  logoWidth: 120,
+  logoHeight: 28,
+};
+
 export const whatsappLink = (message?: string) => {
   if (!site.whatsapp) return "#cotacao";
   const base = `https://wa.me/${site.whatsapp}`;
   return message ? `${base}?text=${encodeURIComponent(message)}` : base;
 };
 
-/** WhatsApp de uma unidade (só quando confirmado em `units[].whatsapp`). */
-export const unitWhatsappLink = (u: { whatsapp: string | null }, message?: string) => {
-  if (!u.whatsapp) return null;
-  const base = `https://wa.me/${u.whatsapp.replace(/\D/g, "")}`;
-  return message ? `${base}?text=${encodeURIComponent(message)}` : base;
-};
 
 export const nav = [
   { label: "Início", href: "#inicio" },
@@ -153,13 +161,24 @@ export type IconName =
 export type Stat = {
   value: string;
   label: string;
-  icon: IconName;
-  pending?: boolean;
+  /** "seal" usa o símbolo oficial da marca (bloco de produção própria) */
+  icon: IconName | "seal";
+  /** bloco em destaque (ocupa mais espaço na faixa) */
+  featured?: boolean;
 };
 
+/**
+ * Faixa de autoridade abaixo do hero — SOMENTE informação confirmada.
+ * (Sem "anos de mercado" / "clientes atendidos": não há número real no projeto.)
+ * "Produção própria" recupera a prova institucional do site antigo.
+ */
 export const stats: Stat[] = [
-  { value: "+00", label: "anos de mercado", icon: "award", pending: true }, // PLACEHOLDER
-  { value: "+0.000", label: "clientes atendidos", icon: "users", pending: true }, // PLACEHOLDER
+  {
+    value: "Produção própria",
+    label: "Frutas frescas e selecionadas, com controle de qualidade desde a origem.",
+    icon: "seal",
+    featured: true,
+  },
   { value: "Entregas", label: "rápidas e programadas", icon: "truck" },
   { value: "2", label: "unidades estratégicas", icon: "pin" },
 ];
@@ -169,7 +188,7 @@ export type Product = {
   name: string;
   short: string;
   description: string;
-  image: "abacaxi" | "melancia" | "cocoSeco" | "cocoVerde";
+  image: "abacaxi" | "melancia" | "cocoSeco" | "cocoVerde" | "melao";
   alt: string;
 };
 
@@ -210,6 +229,15 @@ export const products: Product[] = [
     image: "cocoVerde",
     alt: "Coco verde fresco segurado à mão em frente ao estoque",
   },
+  {
+    slug: "melao",
+    name: "Melão",
+    short: "Selecionado com qualidade para atender diferentes tipos de negócio.",
+    description:
+      "Casca, cor de fundo e aroma na base indicam o ponto certo. Entregamos melão pronto para vender, não para amadurecer na prateleira.",
+    image: "melao",
+    alt: "Melão amarelo inteiro sendo cortado sobre caixa de madeira",
+  },
 ];
 
 export type ProcessStep = {
@@ -218,7 +246,8 @@ export type ProcessStep = {
   description: string;
   /** Texto expandido (accordion mobile) */
   detail: string;
-  icon: IconName;
+  /** ícone da etapa (família Lucide em Process.tsx) */
+  icon: "field" | "select" | "truck" | "box";
 };
 
 export const processSteps: ProcessStep[] = [
@@ -293,7 +322,7 @@ export const aboutHighlights: { icon: IconName; title: string; text: string }[] 
 export const faq = [
   {
     q: "Quais frutas estão disponíveis para distribuição?",
-    a: "Trabalhamos com abacaxi, melancia, coco seco e coco verde como produtos principais. Melão também pode ser oferecido conforme a sazonalidade. Consulte a disponibilidade da semana pelo WhatsApp.",
+    a: "Trabalhamos com abacaxi, melancia, coco seco, coco verde e melão. Consulte a disponibilidade da semana pelo WhatsApp.",
   },
   {
     q: "Como funciona a logística de entregas?",
@@ -305,7 +334,7 @@ export const faq = [
   },
   {
     q: "Como solicito uma cotação de produtos?",
-    a: "Preencha o formulário do site ou chame direto no WhatsApp. Envie sua lista de produtos e quantidades e nossa equipe retorna com a cotação do dia.",
+    a: "Fale com nossa equipe pelo WhatsApp, envie os produtos e quantidades que precisa e retornamos com a cotação do dia.",
   },
 ] as const;
 
@@ -314,5 +343,29 @@ export const productOptions = [
   "Melancia",
   "Coco Seco",
   "Coco Verde",
+  "Melão",
   "Mais de um produto",
 ] as const;
+
+/** WhatsApp de uma unidade (só quando confirmado em `units[].whatsapp`). */
+export const unitWhatsappLink = (u: { whatsapp: string | null }, message?: string) => {
+  if (!u.whatsapp) return null;
+  const base = `https://wa.me/${u.whatsapp.replace(/\D/g, "")}`;
+  return message ? `${base}?text=${encodeURIComponent(message)}` : base;
+};
+
+/** Mensagem padrão para falar com uma unidade (header, menu mobile, hub). */
+export const unitMessage = (city: string) => `Olá! Vim pelo site da JR Frutas e gostaria de falar com a unidade de ${city}.`;
+
+/** Mensagem padrão de cotação. */
+export const QUOTE_MESSAGE = "Olá! Vim pelo site da JR Frutas e gostaria de solicitar uma cotação.";
+
+/**
+ * CTA de cotação ("Solicite uma cotação" e equivalentes): abre DIRETO o
+ * WhatsApp da Unidade Goiânia (decisão do cliente). Aceita mensagem custom
+ * (ex.: formulário) — sem número, cai para a seção de contato.
+ */
+export const quoteWhatsappLink = (message: string = QUOTE_MESSAGE) => {
+  const goiania = units.find((u) => u.id === "goiania");
+  return (goiania && unitWhatsappLink(goiania, message)) ?? "#cotacao";
+};

@@ -33,7 +33,7 @@ type LinkProps = Common & { href: string } & Omit<ComponentProps<typeof Link>, "
 
 const cls = ({ variant = "white", size = "md", full, className = "" }: Common) =>
   [
-    "inline-flex items-center justify-center gap-3 rounded-[var(--radius-btn)] font-bold uppercase tracking-[0.1em] whitespace-nowrap",
+    "inline-flex items-center justify-center gap-3 rounded-[var(--radius-btn)] font-display font-bold uppercase tracking-[0.1em] whitespace-nowrap",
     "transition-[background-color,border-color,color,transform] duration-300 ease-[var(--ease-out-soft)] active:scale-[0.98] select-none",
     variants[variant],
     sizes[size],
@@ -64,7 +64,7 @@ export function TextLink({ href, children, className = "" }: { href: string; chi
   return (
     <Link
       href={href}
-      className={`group inline-flex items-center gap-2 text-[0.72rem] font-bold uppercase tracking-[0.14em] ${className}`}
+      className={`group inline-flex items-center gap-2 font-display text-[0.72rem] font-bold uppercase tracking-[0.14em] ${className}`}
     >
       <span>{children}</span>
       <ArrowRight size={15} className="transition-transform duration-300 group-hover:translate-x-1" />
