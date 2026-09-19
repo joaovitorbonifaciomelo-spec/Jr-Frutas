@@ -10,7 +10,7 @@ import { Reveal } from "@/components/ui/Reveal";
 
 const field =
   "w-full rounded-[var(--radius-btn)] border border-white/22 bg-white/[0.04] px-4 text-[0.92rem] text-white placeholder:text-white/40 transition-[border-color,background-color] duration-300 focus:border-white focus:bg-white/[0.07] focus:outline-none";
-const label = "mb-1.5 block font-display text-[0.72rem] font-bold uppercase tracking-[0.12em] text-white/80";
+const label = "mb-2 block font-display text-[0.72rem] font-bold uppercase tracking-[0.12em] text-white/80";
 
 export function Quote() {
   const [more, setMore] = useState(false);
@@ -37,36 +37,47 @@ export function Quote() {
 
   return (
     <section id="cotacao" className="relative bg-black text-white">
-      <div className="grid lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
-        {/* Foto grande — sangra até a borda esquerda no desktop */}
-        <div className="relative hidden min-h-[640px] lg:block">
-          <Image
-            src={melancia}
-            alt="Fatia de melancia vermelha, fresca e suculenta"
-            fill
-            sizes="50vw"
-            placeholder="blur"
-            className="object-cover object-[50%_60%]"
-          />
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(0,0,0,0)_55%,rgba(0,0,0,0.95)_100%),linear-gradient(0deg,rgba(0,0,0,0.35),rgba(0,0,0,0))]" />
-        </div>
+      <div className="container-site py-14 sm:py-20 lg:py-24">
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:items-stretch lg:gap-12">
+          {/* ---------- Peça visual (esquerda) ----------
+              Container editorial preparado para receber a arte principal de produto
+              (melancia cortada, respingos, fundo escuro). Para trocar por um PNG
+              recortado: use object-contain + padding no <Image> e mantenha o glow. */}
+          <Reveal className="relative">
+            <figure className="relative h-full min-h-[380px] overflow-hidden rounded-[28px] border border-white/10 bg-[#070707] shadow-[0_40px_90px_-40px_rgba(0,0,0,0.95)] sm:min-h-[460px] lg:min-h-[640px]">
+              {/* glow de fundo para separar a arte do preto absoluto */}
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(70%_60%_at_45%_45%,rgba(255,255,255,0.12),rgba(255,255,255,0)_70%)]" />
+              <Image
+                src={melancia}
+                alt="Fatia de melancia vermelha, fresca e suculenta"
+                fill
+                sizes="(min-width: 1024px) 560px, 100vw"
+                placeholder="blur"
+                className="object-cover object-[52%_58%] transition-transform duration-[1400ms] ease-[var(--ease-out-soft)] hover:scale-[1.03]"
+              />
+              {/* vinheta + base escura: profundidade e leitura da legenda */}
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(120%_100%_at_50%_40%,rgba(0,0,0,0)_45%,rgba(0,0,0,0.7)_100%)]" />
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-[linear-gradient(180deg,rgba(0,0,0,0)_0%,rgba(0,0,0,0.85)_100%)]" />
+              {/* reflexo sutil no topo (acabamento de peça) */}
+              <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.35),transparent)]" />
+              <figcaption className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
+                <p className="eyebrow text-white/60">Melancia selecionada</p>
+                <p className="mt-2 max-w-[16ch] font-display text-[1.6rem] font-extrabold leading-[1.05] tracking-[-0.02em] sm:text-[2rem]">
+                  Doce por dentro, no ponto de vender.
+                </p>
+              </figcaption>
+            </figure>
+          </Reveal>
 
-        {/* Formulário */}
-        <div className="relative">
-          {/* fundo fotográfico discreto no mobile */}
-          <div className="absolute inset-0 lg:hidden" aria-hidden>
-            <Image src={melancia} alt="" fill sizes="100vw" placeholder="blur" className="object-cover object-[30%_50%] opacity-35" />
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.85),rgba(0,0,0,0.95))]" />
-          </div>
-
-          <div className="container-site relative py-14 sm:py-20 lg:max-w-none lg:px-14 lg:py-20 xl:px-20">
+          {/* ---------- Formulário (direita) ---------- */}
+          <div className="relative rounded-[28px] border border-white/10 bg-white/[0.03] p-6 sm:p-8 lg:p-10">
             <Reveal>
               <h2 className="h-section">Solicite sua cotação</h2>
-              <p className="mt-2 text-[0.95rem] text-white/70">Preencha os dados e nossa equipe entrará em contato.</p>
+              <p className="mt-3 max-w-[40ch] text-[0.98rem] leading-relaxed text-white/70">Preencha os dados e nossa equipe entrará em contato.</p>
             </Reveal>
 
             <Reveal delay={100}>
-              <form onSubmit={onSubmit} className="mt-8 grid gap-4 sm:grid-cols-2" noValidate={false}>
+              <form onSubmit={onSubmit} className="mt-8 grid gap-5 sm:grid-cols-2" noValidate={false}>
                 <div>
                   <label htmlFor="q-nome" className={label}>
                     Nome*
@@ -124,9 +135,9 @@ export function Quote() {
                   <textarea
                     id="q-mensagem"
                     name="mensagem"
-                    rows={4}
+                    rows={5}
                     placeholder="Fale mais sobre sua necessidade (quantidades, frequência, região)"
-                    className={`${field} resize-y py-3`}
+                    className={`${field} min-h-[140px] resize-y py-3.5`}
                   />
                 </div>
 
