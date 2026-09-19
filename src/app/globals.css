@@ -299,3 +299,31 @@ html[data-env="development"] [data-pending] {
     display: none;
   }
 }
+
+/* -------------------------------------------------------------------------
+   Footer mobile (≤767px): padrão único de subseção — mesmo eixo central,
+   mesma largura de leitura, mesmo padding lateral, mesmo ritmo vertical.
+   Divisores dentro da caixa (não nas bordas da viewport). Desktop intocado.
+   ------------------------------------------------------------------------- */
+@media (width < 48rem) {
+  .footer-section {
+    width: 100%;
+    max-width: 390px;
+    margin-inline: auto;
+    padding-inline: 24px;
+    padding-block: 48px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .footer-section + .footer-section {
+    border-top: 1px solid rgb(255 255 255 / 0.1);
+  }
+  .footer-section:first-child {
+    padding-top: 0;
+  }
+  .footer-section--last {
+    padding-bottom: 0;
+  }
+}

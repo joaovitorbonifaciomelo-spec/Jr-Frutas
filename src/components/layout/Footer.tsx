@@ -12,14 +12,14 @@ export function Footer() {
     <footer className="bg-black text-white">
       {/* Conteúdo institucional completo em todos os tamanhos — no mobile só muda o layout (1 coluna, divisores) */}
       <div className="container-site py-12 md:py-16">
-        <div className="grid grid-cols-1 justify-items-center gap-10 divide-y divide-white/10 text-center md:grid-cols-2 md:justify-items-stretch md:gap-10 md:divide-y-0 md:text-left lg:grid-cols-12">
-          <div className="flex w-full flex-col items-center md:items-start lg:col-span-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 md:gap-10 lg:grid-cols-12">
+          <div className="footer-section md:flex md:flex-col md:items-start lg:col-span-4">
             <Logo variant="stacked" height={96} href={null} />
             <p className="eyebrow mt-6 text-white/85">Cultivando Qualidade.</p>
             <Social className="mt-6 justify-center md:justify-start" />
           </div>
 
-          <div className="flex w-full flex-col items-center pt-10 md:items-start md:pt-0 lg:col-span-2">
+          <div className="footer-section md:flex md:flex-col md:items-start lg:col-span-2">
             <h3 className="eyebrow mb-5 text-white">Navegação</h3>
             <ul className="space-y-2.5 text-[0.9rem] text-white/70">
               {nav.map((n) => (
@@ -32,7 +32,7 @@ export function Footer() {
             </ul>
           </div>
 
-          <div className="flex w-full flex-col items-center pt-10 md:items-start md:pt-0 lg:col-span-3">
+          <div className="footer-section md:flex md:flex-col md:items-start lg:col-span-3">
             <h3 className="eyebrow mb-5 text-white">Unidades</h3>
             <ul className="space-y-6 text-[0.9rem] text-white/70">
               {units.map((u) => (
@@ -47,7 +47,7 @@ export function Footer() {
                   >
                     <WhatsApp size={14} /> {u.phone}
                   </a>
-                  <p className="mt-1.5 leading-relaxed">
+                  <p className="mt-1.5 max-w-[26ch] leading-relaxed md:max-w-none">
                     {u.addressLines.map((l) => (
                       <span key={l} className="block">
                         {l}
@@ -59,7 +59,7 @@ export function Footer() {
             </ul>
           </div>
 
-          <div className="flex w-full flex-col items-center pt-10 md:items-start md:pt-0 lg:col-span-3">
+          <div className="footer-section md:flex md:flex-col md:items-start lg:col-span-3">
             <h3 className="eyebrow mb-5 text-white">Solicite uma cotação</h3>
             <p className="max-w-[32ch] text-[0.9rem] leading-relaxed text-white/70">
               Fale com nosso time e receba sua proposta.
@@ -71,7 +71,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col items-center gap-4 border-t border-white/10 pt-6 text-center text-[0.75rem] text-white/50 md:mt-14 md:flex-row md:flex-wrap md:items-center md:justify-between md:gap-x-8 md:gap-y-3 md:text-left">
+        <div className="footer-section footer-section--last mt-0 !flex !flex-col items-center gap-4 border-t border-white/10 !pt-6 text-center text-[0.75rem] text-white/50 md:mt-14 md:!flex-row md:flex-wrap md:items-center md:justify-between md:gap-x-8 md:gap-y-3 md:!pt-6 md:text-left">
           <p>
             © {year} {site.name}. Todos os direitos reservados.
             <span className="mx-2 text-white/25">·</span>
