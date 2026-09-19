@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useState, type FormEvent } from "react";
-import melancia from "@/assets/images/melancia-fatia.webp";
+import melancia from "@/assets/images/melancia-cotacao.png";
 import { productOptions, QUOTE_MESSAGE, quoteWhatsappLink } from "@/data/site";
 import { Button, ButtonLink } from "@/components/ui/Button";
 import { WhatsApp } from "@/components/ui/Icons";
@@ -39,24 +39,26 @@ export function Quote() {
     <section id="cotacao" className="relative bg-black text-white">
       <div className="container-site py-14 sm:py-16 lg:py-20">
         {/* UM bloco horizontal: [ melancia ] [ formulário ] — mesma altura, divisão interna sutil */}
-        <Reveal className="overflow-hidden rounded-[28px] border border-white/10 bg-[#050505] shadow-[0_40px_90px_-50px_rgba(0,0,0,0.95)]">
-          <div className="grid lg:grid-cols-[46fr_54fr]">
-            {/* ---------- Área visual (42%) ----------
-                Preparada para a arte final em paisagem (3:2 / 16:10, melancia + splash, fundo preto).
-                A borda direita/inferior se funde no preto para não marcar onde termina a foto. */}
+        <Reveal className="overflow-hidden rounded-[28px] border border-white/10 bg-black shadow-[0_40px_90px_-50px_rgba(0,0,0,0.95)]">
+          <div className="grid lg:grid-cols-2">
+            {/* ---------- Área visual (50%) ----------
+                Arte aprovada: melancia-cotacao.png (1586×992, original intacto; Next entrega AVIF/WebP).
+                Fundo da foto é preto puro → funde com o bloco (bg-black). Enquadramento medido na imagem:
+                polpa em x 0,16–0,91 (disco cortado 0,16–0,55, fatia 0,55–0,91).
+                Desktop: cover pela altura mostra ~60% da largura → object-position 40% (janela ≈ 0,16–0,76:
+                disco inteiro + maior parte da fatia). Mobile 3:2: ~94% da arte visível, centrada. */}
             <div className="relative aspect-[3/2] w-full lg:aspect-auto lg:min-h-[480px]">
               <Image
                 src={melancia}
-                alt="Melancia cortada, fresca e suculenta"
+                alt="Melancia aberta e fatia com respingos de água sobre fundo preto"
                 fill
-                sizes="(min-width: 1024px) 480px, 100vw"
+                quality={85}
+                sizes="(min-width: 1024px) 1000px, 100vw"
                 placeholder="blur"
-                className="object-cover object-[50%_55%]"
+                className="object-cover object-[50%_50%] lg:object-[40%_50%]"
               />
-              {/* fusão com o fundo: direita (desktop) e base (mobile) */}
-              <div className="pointer-events-none absolute inset-0 hidden bg-[linear-gradient(90deg,rgba(5,5,5,0)_55%,rgba(5,5,5,0.75)_88%,#050505_100%)] lg:block" />
-              <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0)_60%,#050505_100%)] lg:hidden" />
-              <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.25),rgba(0,0,0,0)_30%,rgba(0,0,0,0)_75%,rgba(0,0,0,0.35))]" />
+              {/* fusão sutil com o formulário (desktop) — só na borda, sem escurecer a fruta */}
+              <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-24 bg-[linear-gradient(90deg,rgba(0,0,0,0),#000)] lg:block" />
             </div>
 
             {/* ---------- Formulário (58%) ---------- */}
