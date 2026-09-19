@@ -38,34 +38,28 @@ export function Quote() {
   return (
     <section id="cotacao" className="relative bg-black text-white">
       <div className="container-site py-14 sm:py-16 lg:max-w-[1280px] lg:pt-2 lg:pb-20 2xl:max-w-[1360px]">
-        {/* Peça única: arte full-height ao fundo (esquerda, ~70% da largura) dissolvendo no preto
-            em direção ao formulário; contorno externo sutil só no bloco. Mobile: arte 3:2 + form. */}
+        {/* 2 colunas: [ imagem inteira, sem crop/fade ] [ formulário ]. Fundo preto atrás da arte
+            dá o respiro; a imagem começa colada na borda esquerda da área útil. */}
         <Reveal className="relative overflow-hidden rounded-[28px] border border-white/[0.06] bg-black shadow-[0_40px_90px_-50px_rgba(0,0,0,0.95)] lg:border-white/[0.025] lg:shadow-none">
-          {/* ---------- Arte (melancia-cotacao.png, original intacto) ----------
-              Desktop: absolute, altura total, 70% da largura (ratio ≈ 1,6 = ratio da foto → quase sem corte),
-              leve zoom para impacto; máscara horizontal dissolve a borda direita no preto (o splash avança
-              até a área do formulário) e degradês sutis no topo/base. Sem overlay sobre a fruta. */}
-          <div className="relative aspect-[3/2] w-full overflow-hidden lg:absolute lg:inset-y-0 lg:left-0 lg:aspect-auto lg:w-[66%] lg:[mask-image:linear-gradient(90deg,#000_50%,rgba(0,0,0,0.7)_66%,rgba(0,0,0,0.22)_82%,transparent_96%)]">
-            <Image
-              src={melancia}
-              alt="Melancia aberta e fatia com respingos de água sobre fundo preto"
-              fill
-              quality={85}
-              sizes="(min-width: 1024px) 1000px, 100vw"
-              placeholder="blur"
-              className="object-cover object-[50%_50%] lg:origin-[40%_55%] lg:scale-[1.06] lg:object-[42%_52%]"
-            />
-            <div className="pointer-events-none absolute inset-x-0 top-0 hidden h-[18%] bg-[linear-gradient(180deg,rgba(0,0,0,0.85)_0%,rgba(0,0,0,0)_100%)] lg:block" />
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 hidden h-[14%] bg-[linear-gradient(0deg,rgba(0,0,0,0.85)_0%,rgba(0,0,0,0)_100%)] lg:block" />
-            <div className="pointer-events-none absolute inset-y-0 left-0 hidden w-[8%] bg-[linear-gradient(90deg,#000_0%,rgba(0,0,0,0)_100%)] lg:block" />
-            {/* transição: escurece só a massa da fruta na faixa 58–100% da arte; gotas claras seguem visíveis por cima do preto */}
-            <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[42%] bg-[linear-gradient(90deg,rgba(0,0,0,0)_0%,rgba(0,0,0,0.45)_55%,rgba(0,0,0,0.75)_100%)] lg:block" />
-            <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0)_62%,#000_100%)] lg:hidden" />
-          </div>
+          <div className="grid lg:grid-cols-[minmax(0,58fr)_minmax(0,42fr)] lg:items-stretch">
+            {/* ---------- Arte (melancia-cotacao.png, 1586×992 — original intacto) ----------
+                object-contain + left center: 100% da composição visível (fruta + respingos), proporção
+                original, sem máscara, sem overlay, sem escurecimento. */}
+            <div className="relative aspect-[1586/992] w-full min-w-0 bg-black lg:aspect-auto lg:min-h-[520px]">
+              <Image
+                src={melancia}
+                alt="Melancia aberta e fatia com respingos de água sobre fundo preto"
+                fill
+                quality={85}
+                sizes="(min-width: 1024px) 700px, 100vw"
+                placeholder="blur"
+                className="object-contain object-[left_center]"
+              />
+            </div>
 
-          {/* ---------- Formulário (42% à direita, sobre o preto) ---------- */}
-          <div className="relative lg:ml-[58%] lg:min-h-[540px]">
-            <div className="relative p-6 sm:p-8 lg:py-8 lg:pr-8 lg:pl-4 xl:pr-10">
+            {/* ---------- Formulário (direita) ---------- */}
+            <div className="relative min-w-0">
+            <div className="relative p-6 sm:p-8 lg:py-8 lg:pr-8 lg:pl-6 xl:pr-10">
             <Reveal>
               <h2 className="h-section lg:text-[2rem]">Solicite sua cotação</h2>
               <p className="mt-2 max-w-[44ch] text-[0.95rem] leading-relaxed text-white/70 lg:mt-1 lg:text-[0.9rem]">Preencha os dados e nossa equipe entrará em contato.</p>
@@ -165,6 +159,7 @@ export function Quote() {
                 </div>
               </form>
             </Reveal>
+            </div>
             </div>
           </div>
         </Reveal>
