@@ -14,10 +14,9 @@ const SHEET_STATE = "jr-links-sheet";
 
 type SheetId = "atendimento" | "localizacao" | null;
 
-/** Vidro preto/neutro: opacidade alta + saturação reduzida → não pega a cor da cena atrás */
+/** Vidro preto/neutro — ver .glass-card em globals.css (alpha baixo, blur + saturate reduzido) */
 const glass =
-  "group relative flex w-full items-center gap-4 rounded-[18px] border border-white/12 bg-[#0a0a0a]/70 px-4 text-left text-white backdrop-blur-2xl backdrop-saturate-50 shadow-[0_8px_24px_-16px_rgba(0,0,0,0.9)] transition-[background-color,border-color,transform,opacity] duration-200 ease-[var(--ease-out-soft)] hover:border-white/25 hover:bg-[#0a0a0a]/80 active:scale-[0.985] active:opacity-90 " +
-  "before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-px before:rounded-t-[18px] before:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.28),transparent)]";
+  "glass-card group relative flex w-full items-center gap-4 rounded-[18px] px-4 text-left text-white transition-[background-color,border-color,transform,opacity] duration-200 ease-[var(--ease-out-soft)] active:scale-[0.985] active:opacity-90";
 
 export function LinksHub() {
   const [sheet, setSheet] = useState<SheetId>(null);
@@ -120,7 +119,7 @@ export function LinksHub() {
               rel="noopener"
               onClick={() => track("hub_instagram")}
               data-pending={ig.pending ? "" : undefined}
-              className="flex h-11 items-center gap-2 rounded-full border border-white/20 bg-[#0a0a0a]/60 px-4 text-[0.82rem] font-bold text-white backdrop-blur-xl transition-[background-color,color] duration-200 hover:bg-white hover:text-black active:bg-white active:text-black"
+              className="glass-chip flex h-11 items-center gap-2 rounded-full px-4 text-[0.82rem] font-bold text-white transition-[background-color,color] duration-200 hover:bg-white hover:text-black active:bg-white active:text-black"
             >
               <Instagram size={17} />
               {ig.handle ? `@${ig.handle}` : "Instagram"}
@@ -238,7 +237,7 @@ function Shortcut({
 }) {
   const inner = (
     <>
-      <span className="grid size-11 shrink-0 place-items-center rounded-full border border-white/20 bg-white/[0.04] text-white">{icon}</span>
+      <span className="grid size-11 shrink-0 place-items-center rounded-full border border-white/22 bg-white/[0.06] text-white">{icon}</span>
       <span className="min-w-0 flex-1">
         <span className="block text-[1.02rem] font-extrabold leading-tight tracking-[-0.01em]">{title}</span>
         <span className="block text-[0.82rem] text-white/65">{copy}</span>
@@ -264,7 +263,7 @@ function IconButton({ label, onClick, children }: { label: string; onClick: () =
       onClick={onClick}
       aria-label={label}
       title={label}
-      className="grid size-11 place-items-center rounded-full border border-white/20 bg-[#0a0a0a]/60 text-white backdrop-blur-xl transition-[background-color,color] duration-200 hover:bg-white hover:text-black active:bg-white active:text-black"
+      className="glass-chip grid size-11 place-items-center rounded-full text-white transition-[background-color,color] duration-200 hover:bg-white hover:text-black active:bg-white active:text-black"
     >
       {children}
     </button>

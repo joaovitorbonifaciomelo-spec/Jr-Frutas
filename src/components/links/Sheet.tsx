@@ -93,7 +93,7 @@ export function Sheet({ open, onClose, title, description, children }: Props) {
         onTouchEnd={onTouchEnd}
         onTouchCancel={onTouchEnd}
         style={{ transform: open ? `translateY(${drag}px)` : "translateY(100%)" }}
-        className={`absolute inset-x-0 bottom-0 mx-auto w-full max-w-[480px] rounded-t-[26px] border-t border-white/12 bg-[#050505]/85 px-5 pt-3 pb-[max(20px,env(safe-area-inset-bottom))] text-white shadow-[0_-20px_60px_-20px_rgba(0,0,0,0.9)] backdrop-blur-2xl backdrop-saturate-50 ease-[var(--ease-out-soft)] sm:px-6 ${
+        className={`absolute inset-x-0 bottom-0 mx-auto w-full max-w-[480px] glass-sheet rounded-t-[26px] px-5 pt-3 pb-[max(20px,env(safe-area-inset-bottom))] text-white ease-[var(--ease-out-soft)] sm:px-6 ${
           dragging ? "transition-none" : "transition-transform duration-400"
         }`}
       >

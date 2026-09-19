@@ -74,11 +74,11 @@ export function VideoBackground({ dimmed = false }: Props) {
 
       {/* Overlay leve e uniforme (mantém o vídeo perceptível) */}
       <div
-        className={`absolute inset-0 bg-black transition-opacity duration-500 ${dimmed ? "opacity-60" : "opacity-[0.22] lg:opacity-40"}`}
+        className={`absolute inset-0 bg-black transition-opacity duration-500 ${dimmed ? "opacity-55" : "opacity-[0.16] lg:opacity-30"}`}
       />
       {/* Gradientes localizados: atrás do logo (topo) e atrás dos cards/rodapé (base) */}
-      <div className="absolute inset-x-0 top-0 h-[42%] bg-[linear-gradient(180deg,rgba(0,0,0,0.7)_0%,rgba(0,0,0,0.35)_55%,rgba(0,0,0,0)_100%)]" />
-      <div className="absolute inset-x-0 bottom-0 h-[62%] bg-[linear-gradient(0deg,rgba(0,0,0,0.9)_0%,rgba(0,0,0,0.6)_45%,rgba(0,0,0,0)_100%)]" />
+      <div className="absolute inset-x-0 top-0 h-[40%] bg-[linear-gradient(180deg,rgba(0,0,0,0.62)_0%,rgba(0,0,0,0.28)_55%,rgba(0,0,0,0)_100%)]" />
+      <div className="absolute inset-x-0 bottom-0 h-[58%] bg-[linear-gradient(0deg,rgba(0,0,0,0.78)_0%,rgba(0,0,0,0.38)_45%,rgba(0,0,0,0)_100%)]" />
     </div>
   );
 }
