@@ -12,7 +12,7 @@ export function Hero() {
 
       <div className="container-site relative">
         {/* Conteúdo à esquerda, por cima do vídeo */}
-        <div className="flex min-h-[min(calc(100svh-72px),640px)] items-center py-14 sm:py-20 lg:min-h-[600px] lg:py-24">
+        <div className="flex min-h-[480px] items-center py-12 sm:min-h-[560px] sm:py-20 lg:min-h-[600px] lg:py-24">
           <div className="max-w-[640px]">
             <Reveal>
               <h1 className="h-display [text-shadow:0_2px_24px_rgba(0,0,0,0.6)]">

@@ -10,9 +10,9 @@ const year = new Date().getFullYear();
 export function Footer() {
   return (
     <footer className="bg-black text-white">
-      {/* ---------- DESKTOP / TABLET ---------- */}
-      <div className="container-site hidden py-16 md:block">
-        <div className="grid grid-cols-2 gap-10 lg:grid-cols-12">
+      {/* Conteúdo institucional completo em todos os tamanhos — no mobile só muda o layout (1 coluna, divisores) */}
+      <div className="container-site py-12 md:py-16">
+        <div className="grid grid-cols-1 gap-10 divide-y divide-white/10 md:grid-cols-2 md:gap-10 md:divide-y-0 lg:grid-cols-12">
           <div className="lg:col-span-4">
             <Logo variant="stacked" height={96} href={null} />
             <p className="eyebrow mt-6 text-white/85">Cultivando Qualidade.</p>
@@ -20,7 +20,7 @@ export function Footer() {
             <Social className="mt-6" />
           </div>
 
-          <div className="lg:col-span-2">
+          <div className="pt-10 md:pt-0 lg:col-span-2">
             <h3 className="eyebrow mb-5 text-white">Navegação</h3>
             <ul className="space-y-2.5 text-[0.9rem] text-white/70">
               {nav.map((n) => (
@@ -33,7 +33,7 @@ export function Footer() {
             </ul>
           </div>
 
-          <div className="lg:col-span-3">
+          <div className="pt-10 md:pt-0 lg:col-span-3">
             <h3 className="eyebrow mb-5 text-white">Unidades</h3>
             <ul className="space-y-6 text-[0.9rem] text-white/70">
               {units.map((u) => (
@@ -60,19 +60,19 @@ export function Footer() {
             </ul>
           </div>
 
-          <div className="lg:col-span-3">
+          <div className="pt-10 md:pt-0 lg:col-span-3">
             <h3 className="eyebrow mb-5 text-white">Solicite uma cotação</h3>
             <p className="text-[0.9rem] leading-relaxed text-white/70">
               Fale com nosso time e receba sua proposta.
             </p>
-            <ButtonLink href={quoteWhatsappLink()} target="_blank" rel="noopener" className="mt-6">
+            <ButtonLink href={quoteWhatsappLink()} target="_blank" rel="noopener" className="mt-6 w-full sm:w-auto">
               Solicitar cotação
             </ButtonLink>
             <p className="mt-6 text-[0.8rem] text-white/50">Produtos: {products.map((p) => p.name).join(" · ")}</p>
           </div>
         </div>
 
-        <div className="mt-14 flex flex-wrap items-center justify-between gap-x-8 gap-y-3 border-t border-white/10 pt-6 text-[0.75rem] text-white/50">
+        <div className="mt-12 flex flex-col items-center gap-4 border-t border-white/10 pt-6 text-center text-[0.75rem] text-white/50 md:mt-14 md:flex-row md:flex-wrap md:items-center md:justify-between md:gap-x-8 md:gap-y-3 md:text-left">
           <p>
             © {year} {site.name}. Todos os direitos reservados.
             <span className="mx-2 text-white/25">·</span>
@@ -84,24 +84,6 @@ export function Footer() {
         </div>
       </div>
 
-      {/* ---------- MOBILE (muito mais simples) ---------- */}
-      <div className="container-site py-10 md:hidden">
-        <div className="flex items-center justify-between gap-4">
-          <Logo height={34} href={null} />
-          <Social />
-        </div>
-        <nav aria-label="Rodapé" className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-[0.8rem] font-bold uppercase tracking-[0.1em]">
-          <Link href="#produtos">Produtos</Link>
-          <Link href="#quem-somos">Quem somos</Link>
-          <Link href="#cotacao">Contato</Link>
-        </nav>
-        <p className="mt-6 text-[0.8rem] text-white/55">{units.map((u) => u.city).join(" · ")}</p>
-        <div className="mt-8 flex flex-col gap-2 border-t border-white/10 pt-6 text-[0.72rem] text-white/50">
-          <p>© {year} {site.name}. Todos os direitos reservados.</p>
-          <Link href="/politica-de-privacidade">Política de Privacidade</Link>
-        </div>
-        <DeveloperCredit className="mt-6 border-t border-white/10 pt-5" center />
-      </div>
     </footer>
   );
 }
