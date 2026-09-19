@@ -12,12 +12,12 @@ export function Footer() {
     <footer className="bg-black text-white">
       {/* Conteúdo institucional completo em todos os tamanhos — no mobile só muda o layout (1 coluna, divisores) */}
       <div className="container-site py-12 md:py-16">
-        <div className="grid grid-cols-1 gap-10 divide-y divide-white/10 md:grid-cols-2 md:gap-10 md:divide-y-0 lg:grid-cols-12">
-          <div className="lg:col-span-4">
+        <div className="grid grid-cols-1 gap-10 divide-y divide-white/10 text-center md:grid-cols-2 md:gap-10 md:divide-y-0 md:text-left lg:grid-cols-12">
+          <div className="flex flex-col items-center md:items-start lg:col-span-4">
             <Logo variant="stacked" height={96} href={null} />
             <p className="eyebrow mt-6 text-white/85">Cultivando Qualidade.</p>
             <p className="mt-3 max-w-[28ch] text-[0.9rem] leading-relaxed text-white/60">{site.tagline}</p>
-            <Social className="mt-6" />
+            <Social className="mt-6 justify-center md:justify-start" />
           </div>
 
           <div className="pt-10 md:pt-0 lg:col-span-2">
@@ -44,7 +44,7 @@ export function Footer() {
                     target="_blank"
                     rel="noopener"
                     aria-label={`WhatsApp ${u.name}: ${u.phone}`}
-                    className="mt-1 inline-flex items-center gap-2 font-bold text-white transition-colors hover:text-white/80"
+                    className="mt-1 inline-flex items-center justify-center gap-2 font-bold text-white transition-colors hover:text-white/80 md:justify-start"
                   >
                     <WhatsApp size={14} /> {u.phone}
                   </a>
