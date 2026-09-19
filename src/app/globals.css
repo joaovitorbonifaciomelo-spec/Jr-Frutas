@@ -239,3 +239,63 @@ html[data-env="development"] [data-pending] {
     }
   }
 }
+
+/* -------------------------------------------------------------------------
+   Marquee de logos ("Quem confia, recomenda.") — CSS puro, fora de @layer
+   (para vencer as utilities do Tailwind no modo reduced-motion).
+   - track com duas metades idênticas; translateX(-50%) fecha o loop sem pulo;
+   - pausa em hover e focus-within (animation-play-state);
+   - máscara lateral suave; sem overflow (overflow hidden no wrapper);
+   - prefers-reduced-motion: sem animação — clone e repetições escondidos,
+     6 logos estáticos centralizados com quebra de linha.
+   ------------------------------------------------------------------------- */
+@keyframes jr-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.logo-marquee {
+  --marquee-duration: 60s;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 12%, #000 88%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 12%, #000 88%, transparent 100%);
+}
+@media (width >= 64rem) {
+  .logo-marquee {
+    --marquee-duration: 80s;
+  }
+}
+.logo-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: jr-marquee var(--marquee-duration) linear infinite;
+  will-change: transform;
+}
+.logo-marquee:hover .logo-marquee-track,
+.logo-marquee:focus-within .logo-marquee-track {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .logo-marquee {
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+  .logo-marquee-track {
+    animation: none;
+    width: auto;
+    justify-content: center;
+  }
+  .logo-marquee-track > ul {
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-right: 0;
+    row-gap: 2rem;
+  }
+  .logo-marquee-track [data-marquee-clone],
+  .logo-marquee-track [data-marquee-dup] {
+    display: none;
+  }
+}
