@@ -127,11 +127,11 @@ export function LinksHub() {
               <Instagram size={17} />
               {ig.handle ? `@${ig.handle}` : "Instagram"}
             </a>
-            <IconButton label="Compartilhar" onClick={() => void onShare()}>
-              <Share size={17} />
-            </IconButton>
             <IconButton label="Salvar contato" onClick={onSaveContact}>
               <UserPlus size={17} />
+            </IconButton>
+            <IconButton label="Compartilhar" onClick={() => void onShare()}>
+              <Share size={17} />
             </IconButton>
           </div>
           <p className="text-[0.62rem] font-bold uppercase tracking-[0.18em] text-white/45">
