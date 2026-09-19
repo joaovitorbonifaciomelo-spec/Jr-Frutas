@@ -12,15 +12,14 @@ export function Footer() {
     <footer className="bg-black text-white">
       {/* Conteúdo institucional completo em todos os tamanhos — no mobile só muda o layout (1 coluna, divisores) */}
       <div className="container-site py-12 md:py-16">
-        <div className="grid grid-cols-1 gap-10 divide-y divide-white/10 text-center md:grid-cols-2 md:gap-10 md:divide-y-0 md:text-left lg:grid-cols-12">
-          <div className="flex flex-col items-center md:items-start lg:col-span-4">
+        <div className="grid grid-cols-1 justify-items-center gap-10 divide-y divide-white/10 text-center md:grid-cols-2 md:justify-items-stretch md:gap-10 md:divide-y-0 md:text-left lg:grid-cols-12">
+          <div className="flex w-full flex-col items-center md:items-start lg:col-span-4">
             <Logo variant="stacked" height={96} href={null} />
             <p className="eyebrow mt-6 text-white/85">Cultivando Qualidade.</p>
-            <p className="mt-3 max-w-[28ch] text-[0.9rem] leading-relaxed text-white/60">{site.tagline}</p>
             <Social className="mt-6 justify-center md:justify-start" />
           </div>
 
-          <div className="pt-10 md:pt-0 lg:col-span-2">
+          <div className="flex w-full flex-col items-center pt-10 md:items-start md:pt-0 lg:col-span-2">
             <h3 className="eyebrow mb-5 text-white">Navegação</h3>
             <ul className="space-y-2.5 text-[0.9rem] text-white/70">
               {nav.map((n) => (
@@ -33,11 +32,11 @@ export function Footer() {
             </ul>
           </div>
 
-          <div className="pt-10 md:pt-0 lg:col-span-3">
+          <div className="flex w-full flex-col items-center pt-10 md:items-start md:pt-0 lg:col-span-3">
             <h3 className="eyebrow mb-5 text-white">Unidades</h3>
             <ul className="space-y-6 text-[0.9rem] text-white/70">
               {units.map((u) => (
-                <li key={u.id}>
+                <li key={u.id} className="flex flex-col items-center md:items-start">
                   <p className="font-display font-bold text-white">{u.name}</p>
                   <a
                     href={unitWhatsappLink(u, unitMessage(u.city)) ?? `tel:${u.phoneE164}`}
@@ -60,15 +59,15 @@ export function Footer() {
             </ul>
           </div>
 
-          <div className="pt-10 md:pt-0 lg:col-span-3">
+          <div className="flex w-full flex-col items-center pt-10 md:items-start md:pt-0 lg:col-span-3">
             <h3 className="eyebrow mb-5 text-white">Solicite uma cotação</h3>
-            <p className="text-[0.9rem] leading-relaxed text-white/70">
+            <p className="max-w-[32ch] text-[0.9rem] leading-relaxed text-white/70">
               Fale com nosso time e receba sua proposta.
             </p>
             <ButtonLink href={quoteWhatsappLink()} target="_blank" rel="noopener" className="mt-6 w-full sm:w-auto">
               Solicitar cotação
             </ButtonLink>
-            <p className="mt-6 text-[0.8rem] text-white/50">Produtos: {products.map((p) => p.name).join(" · ")}</p>
+            <p className="mt-6 max-w-[34ch] text-[0.8rem] text-white/50 md:max-w-none">Produtos: {products.map((p) => p.name).join(" · ")}</p>
           </div>
         </div>
 
