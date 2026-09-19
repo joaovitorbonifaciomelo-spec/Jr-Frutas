@@ -1,9 +1,10 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState, type MouseEvent, type ReactNode } from "react";
+import { useCallback, useEffect, useState, type ReactNode } from "react";
 import { site, units, unitWhatsappLink } from "@/data/site";
 import { Logo } from "@/components/ui/Logo";
 import { ArrowRight, Box, ExternalArrow, Globe, Instagram, MapPin, Phone, Share, UserPlus, WhatsApp } from "@/components/ui/Icons";
+import { HubDebug } from "./HubDebug";
 import { Sheet } from "./Sheet";
 import { Toast, useToast } from "./Toast";
 import { VideoBackground } from "./VideoBackground";
@@ -20,6 +21,7 @@ const glass =
 
 export function LinksHub() {
   const [sheet, setSheet] = useState<SheetId>(null);
+  const [debug, setDebug] = useState(false);
   const [hrefs, setHrefs] = useState({ site: "/", produtos: "/#produtos" });
   const { toast, show, hide } = useToast();
 
@@ -27,6 +29,7 @@ export function LinksHub() {
   useEffect(() => {
     track("hub_open");
     setHrefs({ site: withUtm("/"), produtos: withUtm("/#produtos") });
+    setDebug(new URLSearchParams(window.location.search).get("debug") === "1");
   }, []);
 
   // ---- bottom sheets ↔ histórico (botão voltar do Android fecha o sheet antes de sair) ----
@@ -96,10 +99,10 @@ export function LinksHub() {
             className="group relative flex h-[68px] w-full items-center gap-4 rounded-[18px] border border-white bg-white px-4 text-left text-black shadow-[0_18px_40px_-16px_rgba(0,0,0,0.95)] transition-[transform,opacity] duration-200 ease-[var(--ease-out-soft)] hover:bg-neutral-100 active:scale-[0.985] active:opacity-90"
           >
             <span className="grid size-11 shrink-0 place-items-center rounded-full bg-black text-white">
-              <Phone size={21} />
+              <WhatsApp size={23} />
             </span>
             <span className="min-w-0 flex-1">
-              <span className="block text-[1.08rem] font-extrabold leading-tight tracking-[-0.01em]">Falar com a JR Frutas</span>
+              <span className="block text-[1.08rem] font-extrabold leading-tight tracking-[-0.01em]">WhatsApp</span>
               <span className="block text-[0.82rem] text-black/60">Escolha sua unidade</span>
             </span>
             <ArrowRight size={20} className="shrink-0 transition-transform duration-200 group-hover:translate-x-0.5 group-active:translate-x-1" />
@@ -138,7 +141,7 @@ export function LinksHub() {
       </div>
 
       {/* Atendimento — "Com qual unidade você quer falar?" */}
-      <Sheet open={sheet === "atendimento"} onClose={closeSheet} title="Falar com a JR Frutas" description="Com qual unidade você quer falar?">
+      <Sheet open={sheet === "atendimento"} onClose={closeSheet} title="WhatsApp" description="Com qual unidade você quer falar?">
         <ul className="flex flex-col gap-3">
           {units.map((u) => {
             const wa = unitWhatsappLink(u, WA_MESSAGE); // null enquanto o WhatsApp da unidade não for confirmado
@@ -146,25 +149,31 @@ export function LinksHub() {
               <li key={u.id} className="rounded-[14px] border border-white/10 bg-white/[0.04] p-4">
                 <p className="text-[1.02rem] font-extrabold leading-tight">{u.name}</p>
                 <p className="mt-1 text-[0.88rem] text-white/70">{u.phone}</p>
+                {/* WhatsApp (wa.me) é a ação principal quando `units[].whatsapp` estiver confirmado;
+                    enquanto não estiver, a única ação é ligar para o fixo (nunca wa.me com o fixo). */}
                 <div className="mt-3 flex gap-2">
-                  <a
-                    href={`tel:${u.phoneE164}`}
-                    onClick={() => track(u.id === "goiania" ? "hub_ligar_goiania" : "hub_ligar_brasilia")}
-                    className="inline-flex h-11 flex-1 items-center justify-center gap-2 rounded-[10px] bg-white px-3 text-[0.72rem] font-bold uppercase tracking-[0.08em] text-black transition-colors hover:bg-neutral-200 active:bg-neutral-200"
-                  >
-                    <Phone size={15} /> Ligar
-                  </a>
                   {wa ? (
                     <a
                       href={wa}
                       target="_blank"
                       rel="noopener"
                       onClick={() => track(u.id === "goiania" ? "hub_whatsapp_goiania" : "hub_whatsapp_brasilia")}
-                      className="inline-flex h-11 flex-1 items-center justify-center gap-2 rounded-[10px] border border-white/25 px-3 text-[0.72rem] font-bold uppercase tracking-[0.08em] transition-colors hover:bg-white hover:text-black active:bg-white active:text-black"
+                      className="inline-flex h-11 flex-1 items-center justify-center gap-2 rounded-[10px] bg-white px-3 text-[0.72rem] font-bold uppercase tracking-[0.08em] text-black transition-colors hover:bg-neutral-200 active:bg-neutral-200"
                     >
                       <WhatsApp size={15} /> WhatsApp
                     </a>
                   ) : null}
+                  <a
+                    href={`tel:${u.phoneE164}`}
+                    onClick={() => track(u.id === "goiania" ? "hub_ligar_goiania" : "hub_ligar_brasilia")}
+                    className={`inline-flex h-11 flex-1 items-center justify-center gap-2 rounded-[10px] px-3 text-[0.72rem] font-bold uppercase tracking-[0.08em] transition-colors ${
+                      wa
+                        ? "border border-white/25 hover:bg-white hover:text-black active:bg-white active:text-black"
+                        : "bg-white text-black hover:bg-neutral-200 active:bg-neutral-200"
+                    }`}
+                  >
+                    <Phone size={15} /> Ligar
+                  </a>
                 </div>
               </li>
             );
@@ -216,6 +225,7 @@ export function LinksHub() {
       </Sheet>
 
       <Toast toast={toast} onHide={hide} />
+      {debug ? <HubDebug /> : null}
     </>
   );
 }
