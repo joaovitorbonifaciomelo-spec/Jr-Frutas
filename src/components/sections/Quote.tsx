@@ -10,7 +10,7 @@ import { Reveal } from "@/components/ui/Reveal";
 
 const field =
   "w-full rounded-[var(--radius-btn)] border border-white/22 bg-white/[0.04] px-4 text-[0.92rem] text-white placeholder:text-white/40 transition-[border-color,background-color] duration-300 focus:border-white focus:bg-white/[0.07] focus:outline-none";
-const label = "mb-2 block font-display text-[0.72rem] font-bold uppercase tracking-[0.12em] text-white/80";
+const label = "mb-1.5 block font-display text-[0.7rem] font-bold uppercase tracking-[0.12em] text-white/80";
 
 export function Quote() {
   const [more, setMore] = useState(false);
@@ -37,52 +37,42 @@ export function Quote() {
 
   return (
     <section id="cotacao" className="relative bg-black text-white">
-      <div className="container-site py-14 sm:py-20 lg:py-24">
-        <div className="grid gap-8 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:items-stretch lg:gap-12">
-          {/* ---------- Peça visual (esquerda) ----------
-              Container editorial preparado para receber a arte principal de produto
-              (melancia cortada, respingos, fundo escuro). Para trocar por um PNG
-              recortado: use object-contain + padding no <Image> e mantenha o glow. */}
-          <Reveal className="relative">
-            <figure className="relative h-full min-h-[380px] overflow-hidden rounded-[28px] border border-white/10 bg-[#070707] shadow-[0_40px_90px_-40px_rgba(0,0,0,0.95)] sm:min-h-[460px] lg:min-h-[640px]">
-              {/* glow de fundo para separar a arte do preto absoluto */}
-              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(70%_60%_at_45%_45%,rgba(255,255,255,0.12),rgba(255,255,255,0)_70%)]" />
+      <div className="container-site py-14 sm:py-16 lg:py-20">
+        {/* UM bloco horizontal: [ melancia ] [ formulário ] — mesma altura, divisão interna sutil */}
+        <Reveal className="overflow-hidden rounded-[28px] border border-white/10 bg-[#050505] shadow-[0_40px_90px_-50px_rgba(0,0,0,0.95)]">
+          <div className="grid lg:grid-cols-[46fr_54fr]">
+            {/* ---------- Área visual (42%) ----------
+                Preparada para a arte final em paisagem (3:2 / 16:10, melancia + splash, fundo preto).
+                A borda direita/inferior se funde no preto para não marcar onde termina a foto. */}
+            <div className="relative aspect-[3/2] w-full lg:aspect-auto lg:min-h-[480px]">
               <Image
                 src={melancia}
-                alt="Fatia de melancia vermelha, fresca e suculenta"
+                alt="Melancia cortada, fresca e suculenta"
                 fill
-                sizes="(min-width: 1024px) 560px, 100vw"
+                sizes="(min-width: 1024px) 480px, 100vw"
                 placeholder="blur"
-                className="object-cover object-[52%_58%] transition-transform duration-[1400ms] ease-[var(--ease-out-soft)] hover:scale-[1.03]"
+                className="object-cover object-[50%_55%]"
               />
-              {/* vinheta + base escura: profundidade e leitura da legenda */}
-              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(120%_100%_at_50%_40%,rgba(0,0,0,0)_45%,rgba(0,0,0,0.7)_100%)]" />
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-[linear-gradient(180deg,rgba(0,0,0,0)_0%,rgba(0,0,0,0.85)_100%)]" />
-              {/* reflexo sutil no topo (acabamento de peça) */}
-              <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.35),transparent)]" />
-              <figcaption className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
-                <p className="eyebrow text-white/60">Melancia selecionada</p>
-                <p className="mt-2 max-w-[16ch] font-display text-[1.6rem] font-extrabold leading-[1.05] tracking-[-0.02em] sm:text-[2rem]">
-                  Doce por dentro, no ponto de vender.
-                </p>
-              </figcaption>
-            </figure>
-          </Reveal>
+              {/* fusão com o fundo: direita (desktop) e base (mobile) */}
+              <div className="pointer-events-none absolute inset-0 hidden bg-[linear-gradient(90deg,rgba(5,5,5,0)_55%,rgba(5,5,5,0.75)_88%,#050505_100%)] lg:block" />
+              <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(5,5,5,0)_60%,#050505_100%)] lg:hidden" />
+              <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.25),rgba(0,0,0,0)_30%,rgba(0,0,0,0)_75%,rgba(0,0,0,0.35))]" />
+            </div>
 
-          {/* ---------- Formulário (direita) ---------- */}
-          <div className="relative rounded-[28px] border border-white/10 bg-white/[0.03] p-6 sm:p-8 lg:p-10">
+            {/* ---------- Formulário (58%) ---------- */}
+            <div className="relative p-6 sm:p-8 lg:border-l lg:border-white/[0.06] lg:px-10 lg:py-8 xl:px-12">
             <Reveal>
               <h2 className="h-section">Solicite sua cotação</h2>
-              <p className="mt-3 max-w-[40ch] text-[0.98rem] leading-relaxed text-white/70">Preencha os dados e nossa equipe entrará em contato.</p>
+              <p className="mt-2 max-w-[44ch] text-[0.95rem] leading-relaxed text-white/70">Preencha os dados e nossa equipe entrará em contato.</p>
             </Reveal>
 
             <Reveal delay={100}>
-              <form onSubmit={onSubmit} className="mt-8 grid gap-5 sm:grid-cols-2" noValidate={false}>
+              <form onSubmit={onSubmit} className="mt-5 grid gap-3.5 sm:grid-cols-2 lg:gap-x-4 lg:gap-y-3" noValidate={false}>
                 <div>
                   <label htmlFor="q-nome" className={label}>
                     Nome*
                   </label>
-                  <input id="q-nome" name="nome" required autoComplete="name" placeholder="Seu nome" className={`${field} h-13`} />
+                  <input id="q-nome" name="nome" required autoComplete="name" placeholder="Seu nome" className={`${field} h-11`} />
                 </div>
                 <div>
                   <label htmlFor="q-whatsapp" className={label}>
@@ -95,7 +85,7 @@ export function Quote() {
                     inputMode="tel"
                     autoComplete="tel"
                     placeholder="(00) 00000-0000"
-                    className={`${field} h-13`}
+                    className={`${field} h-11`}
                   />
                 </div>
 
@@ -103,7 +93,7 @@ export function Quote() {
                   <label htmlFor="q-produto" className={label}>
                     Produto de interesse*
                   </label>
-                  <select id="q-produto" name="produto" required defaultValue="" className={`${field} h-13 appearance-none bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2216%22 height=%2216%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22white%22 stroke-width=%222%22><path d=%22m6 9 6 6 6-6%22/></svg>')] bg-[length:16px] bg-[position:right_16px_center] bg-no-repeat pr-11`}>
+                  <select id="q-produto" name="produto" required defaultValue="" className={`${field} h-11 appearance-none bg-[url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2216%22 height=%2216%22 viewBox=%220 0 24 24%22 fill=%22none%22 stroke=%22white%22 stroke-width=%222%22><path d=%22m6 9 6 6 6-6%22/></svg>')] bg-[length:16px] bg-[position:right_16px_center] bg-no-repeat pr-11`}>
                     <option value="" disabled>
                       Selecione o produto
                     </option>
@@ -120,13 +110,13 @@ export function Quote() {
                   <label htmlFor="q-empresa" className={label}>
                     Empresa
                   </label>
-                  <input id="q-empresa" name="empresa" autoComplete="organization" placeholder="Nome da sua empresa" className={`${field} h-13`} />
+                  <input id="q-empresa" name="empresa" autoComplete="organization" placeholder="Nome da sua empresa" className={`${field} h-11`} />
                 </div>
                 <div className={`${more ? "block" : "hidden"} lg:order-4 lg:block`}>
                   <label htmlFor="q-cidade" className={label}>
                     Cidade / Estado
                   </label>
-                  <input id="q-cidade" name="cidade" autoComplete="address-level2" placeholder="Ex.: Goiânia - GO" className={`${field} h-13`} />
+                  <input id="q-cidade" name="cidade" autoComplete="address-level2" placeholder="Ex.: Goiânia - GO" className={`${field} h-11`} />
                 </div>
                 <div className={`${more ? "block" : "hidden"} sm:col-span-2 lg:order-6 lg:block`}>
                   <label htmlFor="q-mensagem" className={label}>
@@ -135,9 +125,9 @@ export function Quote() {
                   <textarea
                     id="q-mensagem"
                     name="mensagem"
-                    rows={5}
+                    rows={3}
                     placeholder="Fale mais sobre sua necessidade (quantidades, frequência, região)"
-                    className={`${field} min-h-[140px] resize-y py-3.5`}
+                    className={`${field} min-h-[96px] resize-y py-2.5`}
                   />
                 </div>
 
@@ -153,10 +143,10 @@ export function Quote() {
                 </div>
 
                 <div className="sm:col-span-2 lg:order-7">
-                  <Button type="submit" size="lg" full>
+                  <Button type="submit" size="lg" full className="lg:h-12">
                     Enviar solicitação
                   </Button>
-                  <p className="mt-3 text-center text-[0.78rem] text-white/50">
+                  <p className="mt-2.5 text-center text-[0.74rem] leading-snug text-white/50">
                     {sent
                       ? "Sua solicitação foi aberta no WhatsApp. Se a janela não abriu, use o botão abaixo."
                       : "Ao enviar, sua solicitação é encaminhada para o WhatsApp da nossa equipe (Unidade Goiânia)."}
@@ -170,8 +160,9 @@ export function Quote() {
                 </div>
               </form>
             </Reveal>
+            </div>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );
