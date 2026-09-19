@@ -179,6 +179,34 @@ html[data-env="development"] [data-pending] {
       inset 0 1px 0 rgb(255 255 255 / 0.2),
       0 -20px 60px -20px rgb(0 0 0 / 0.9);
   }
+  /* MOBILE (≤599px): mesma lógica do glass aprovado da Frutas Beca —
+     blur 1.5px, sem saturate/brightness (vídeo nítido atrás), fundo quase
+     transparente; o cristal vem de borda + highlight + contorno + reflexo. */
+  @media (width < 37.5rem) {
+    .glass-card,
+    .glass-chip {
+      position: relative; /* âncora do reflexo ::before (chips não tinham) */
+      -webkit-backdrop-filter: blur(1.5px);
+      backdrop-filter: blur(1.5px);
+      background: linear-gradient(180deg, rgb(255 255 255 / 0.08), rgb(255 255 255 / 0.02));
+      border: 1px solid rgb(255 255 255 / 0.42);
+      box-shadow:
+        0 8px 24px -18px rgb(0 0 0 / 0.55),
+        inset 0 1px 0 rgb(255 255 255 / 0.5),
+        inset 0 0 0 1px rgb(255 255 255 / 0.08),
+        inset 0 -1px 0 rgb(255 255 255 / 0.06);
+    }
+    /* reflexo: brilho suave no terço superior do vidro */
+    .glass-card::before,
+    .glass-chip::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+      background: linear-gradient(180deg, rgb(255 255 255 / 0.12), rgb(255 255 255 / 0) 38%);
+    }
+  }
   @media (width >= 64rem) {
     .glass-card,
     .glass-chip {
