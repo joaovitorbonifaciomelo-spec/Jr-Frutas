@@ -78,7 +78,7 @@ export function VideoBackground({ dimmed = false }: Props) {
       />
       {/* Gradientes localizados: atrás do logo (topo) e atrás dos cards/rodapé (base) */}
       <div className="absolute inset-x-0 top-0 h-[40%] bg-[linear-gradient(180deg,rgba(0,0,0,0.62)_0%,rgba(0,0,0,0.28)_55%,rgba(0,0,0,0)_100%)]" />
-      <div className="absolute inset-x-0 bottom-0 h-[58%] bg-[linear-gradient(0deg,rgba(0,0,0,0.78)_0%,rgba(0,0,0,0.38)_45%,rgba(0,0,0,0)_100%)]" />
+      <div className="absolute inset-x-0 bottom-0 h-[58%] bg-[linear-gradient(0deg,rgba(0,0,0,0.75)_0%,rgba(0,0,0,0.3)_45%,rgba(0,0,0,0)_100%)]" />
     </div>
   );
 }

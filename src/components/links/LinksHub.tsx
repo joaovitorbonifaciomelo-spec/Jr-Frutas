@@ -84,7 +84,7 @@ export function LinksHub() {
         {/* 1–2. Logo oficial + assinatura curta */}
         <header className="flex flex-col items-center text-center">
           <Logo variant="stacked" height={104} href={null} priority className="drop-shadow-[0_10px_28px_rgba(0,0,0,0.7)]" />
-          <p className="eyebrow mt-4 text-white/80 [text-shadow:0_2px_12px_rgba(0,0,0,0.8)]">Qualidade que começa no campo.</p>
+          <p className="eyebrow mt-4 text-white/80 [text-shadow:0_2px_12px_rgba(0,0,0,0.8)]">Cultivando qualidade.</p>
         </header>
 
         {/* 3–6. Ações */}
