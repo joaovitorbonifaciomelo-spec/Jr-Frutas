@@ -11,7 +11,7 @@
  * - Unidade Goiânia: (62) 3522-9333 · Rodovia BR-153, Km 5,5, GP04, Box 06, Fazenda Retiro, CEASA
  * - Unidade Brasília: (61) 3974-6842 · SIA Trecho 10, Guará, Brasília - DF, 71200-100
  * - Instagram: @jr.frutas — https://www.instagram.com/jr.frutas/
- * - Telefones das unidades são fixos; NÃO confirmados como WhatsApp
+ * - Telefones das unidades são fixos e TAMBÉM WhatsApp (confirmado pelo cliente)
  * - NÃO existe WhatsApp/telefone geral: atendimento é por unidade
  * - Atuação B2B: mercados, supermercados, feirantes, restaurantes, quiosques, padarias
  * - Pedido via WhatsApp, cotação com preço do dia, separação no mesmo dia,
@@ -90,7 +90,7 @@ export type Unit = {
   /** E.164 para links tel:/vCard */
   phoneE164: string;
   phonePending: boolean;
-  /** WhatsApp da unidade em E.164 (ex.: "+5562…"). null = NÃO confirmado — não usar wa.me. */
+  /** WhatsApp da unidade em E.164 (ex.: "+5562…"). null = não confirmado — não usar wa.me. */
   whatsapp: string | null;
   address: string;
   addressPending: boolean;
@@ -112,7 +112,7 @@ export const units: Unit[] = [
     phone: "(62) 3522-9333", // CONFIRMADO
     phoneE164: "+556235229333",
     phonePending: false,
-    whatsapp: null, // PENDENTE: confirmar se este número atende por WhatsApp
+    whatsapp: "+556235229333", // CONFIRMADO pelo cliente: mesmo número do fixo
     address: "Rodovia BR-153, Km 5,5, GP04, Box 06, Fazenda Retiro, CEASA", // CONFIRMADO
     addressPending: false,
     role: "Operação, seleção e expedição para Goiás e região.",
@@ -129,7 +129,7 @@ export const units: Unit[] = [
     phone: "(61) 3974-6842", // CONFIRMADO
     phoneE164: "+556139746842",
     phonePending: false,
-    whatsapp: null, // PENDENTE: confirmar se este número atende por WhatsApp
+    whatsapp: "+556139746842", // CONFIRMADO pelo cliente: mesmo número do fixo
     address: "SIA Trecho 10, Guará, Brasília - DF, 71200-100", // CONFIRMADO
     addressPending: false,
     role: "Distribuição e atendimento ao Distrito Federal e entorno.",

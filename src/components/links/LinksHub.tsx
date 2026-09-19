@@ -10,7 +10,7 @@ import { Toast, useToast } from "./Toast";
 import { VideoBackground } from "./VideoBackground";
 import { copyText, downloadVCard, track, withUtm } from "./hub-utils";
 
-const WA_MESSAGE = "Olá, vim pelo Instagram da JR Frutas e gostaria de atendimento.";
+const waMessage = (city: string) => `Olá! Vim pelo site da JR Frutas e gostaria de falar com a unidade de ${city}.`;
 const SHEET_STATE = "jr-links-sheet";
 
 type SheetId = "atendimento" | "localizacao" | null;
@@ -144,7 +144,7 @@ export function LinksHub() {
       <Sheet open={sheet === "atendimento"} onClose={closeSheet} title="WhatsApp" description="Com qual unidade você quer falar?">
         <ul className="flex flex-col gap-3">
           {units.map((u) => {
-            const wa = unitWhatsappLink(u, WA_MESSAGE); // null enquanto o WhatsApp da unidade não for confirmado
+            const wa = unitWhatsappLink(u, waMessage(u.city)); // null se o WhatsApp da unidade não estiver cadastrado
             return (
               <li key={u.id} className="rounded-[14px] border border-white/10 bg-white/[0.04] p-4">
                 <p className="text-[1.02rem] font-extrabold leading-tight">{u.name}</p>

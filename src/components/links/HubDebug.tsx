@@ -45,12 +45,11 @@ export function HubDebug() {
     const onPlaying = () => {
       window.setTimeout(() => {
         setB(snapshot());
-        const canvas = document.querySelector<HTMLCanvasElement>("[data-video-canvas]");
         const video = document.querySelector<HTMLVideoElement>("video");
         setBg(
-          `canvas=${canvas ? `${canvas.width}x${canvas.height} opacity=${getComputedStyle(canvas).opacity}` : "—"} · video=${
-            video ? `${video.videoWidth}x${video.videoHeight} paused=${video.paused} t=${video.currentTime.toFixed(1)}` : "—"
-          }`,
+          video
+            ? `video=${video.videoWidth}x${video.videoHeight} paused=${video.paused} t=${video.currentTime.toFixed(1)} opacity=${getComputedStyle(video).opacity}`
+            : "video=—",
         );
       }, 2000);
     };
