@@ -61,13 +61,13 @@ function Step({ step, index, last }: { step: (typeof processSteps)[number]; inde
       <Reveal as="li" delay={index * 90} className="flex flex-col items-center text-center">
         <span className="font-display text-[1.15rem] font-extrabold tracking-[-0.02em] text-white/90">{step.number}</span>
         <span className="eyebrow mt-2 text-white">{step.title}</span>
-        <span className="mt-4 grid size-16 place-items-center rounded-full border border-white/25 text-white transition-[border-color,background-color] duration-300 hover:border-white/60">
-          <StepIcon icon={step.icon} size={28} />
+        <span className="mt-5 grid size-24 place-items-center rounded-full border-2 border-white/35 bg-white/[0.04] text-white shadow-[inset_0_0_0_6px_rgba(0,0,0,1),0_0_0_1px_rgba(255,255,255,0.08)] transition-[border-color,background-color] duration-300 hover:border-white/70 hover:bg-white/[0.08]">
+          <StepIcon icon={step.icon} size={44} />
         </span>
-        <p className="mt-4 max-w-[22ch] text-[0.84rem] leading-relaxed text-white/65">{step.description}</p>
+        <p className="mt-5 max-w-[22ch] text-[0.88rem] leading-relaxed text-white/70">{step.description}</p>
       </Reveal>
       {!last ? (
-        <li aria-hidden className="mt-[92px] flex justify-center text-white/60">
+        <li aria-hidden className="mt-[118px] flex justify-center text-white/60">
           <ArrowRight size={40} strokeWidth={1.2} />
         </li>
       ) : null}

@@ -101,6 +101,8 @@ export type Unit = {
   /** WhatsApp da unidade em E.164 (ex.: "+5562…"). null = não confirmado — não usar wa.me. */
   whatsapp: string | null;
   address: string;
+  /** endereço quebrado em linhas para o footer */
+  addressLines: string[];
   addressPending: boolean;
   role: string;
   /** Link "Abrir no mapa" (Google Maps). PLACEHOLDER enquanto o endereço não for confirmado. */
@@ -122,6 +124,7 @@ export const units: Unit[] = [
     phonePending: false,
     whatsapp: "+556235229333", // CONFIRMADO pelo cliente: mesmo número do fixo
     address: "Rodovia BR-153, Km 5,5, GP04, Box 06, Fazenda Retiro, CEASA", // CONFIRMADO
+    addressLines: ["Rodovia BR-153, Km 5,5", "GP04, Box 06", "Fazenda Retiro, CEASA"],
     addressPending: false,
     role: "Operação, seleção e expedição para Goiás e região.",
     mapsUrl: "https://www.google.com/maps/search/?api=1&query=Rodovia%20BR-153%2C%20Km%205%2C5%2C%20GP04%2C%20Box%2006%2C%20Fazenda%20Retiro%2C%20CEASA%20-%20Goi%C3%A2nia%20-%20GO", // busca pelo endereço completo (sem Place ID oficial)
@@ -139,6 +142,7 @@ export const units: Unit[] = [
     phonePending: false,
     whatsapp: "+556139746842", // CONFIRMADO pelo cliente: mesmo número do fixo
     address: "SIA Trecho 10, Guará, Brasília - DF, 71200-100", // CONFIRMADO
+    addressLines: ["SIA Trecho 10", "Guará, Brasília - DF", "71200-100"],
     addressPending: false,
     role: "Distribuição e atendimento ao Distrito Federal e entorno.",
     mapsUrl: "https://www.google.com/maps/search/?api=1&query=SIA%20Trecho%2010%2C%20Guar%C3%A1%2C%20Bras%C3%ADlia%20-%20DF%2C%2071200-100", // busca pelo endereço completo (sem Place ID oficial)
@@ -161,24 +165,13 @@ export type IconName =
 export type Stat = {
   value: string;
   label: string;
-  /** "seal" usa o símbolo oficial da marca (bloco de produção própria) */
-  icon: IconName | "seal";
-  /** bloco em destaque (ocupa mais espaço na faixa) */
-  featured?: boolean;
+  icon: IconName;
 };
 
-/**
- * Faixa de autoridade abaixo do hero — SOMENTE informação confirmada.
- * (Sem "anos de mercado" / "clientes atendidos": não há número real no projeto.)
- * "Produção própria" recupera a prova institucional do site antigo.
- */
+/** Faixa de indicadores abaixo do hero — dados informados pelo cliente. */
 export const stats: Stat[] = [
-  {
-    value: "Produção própria",
-    label: "Frutas frescas e selecionadas, com controle de qualidade desde a origem.",
-    icon: "seal",
-    featured: true,
-  },
+  { value: "+10", label: "anos de mercado", icon: "award" },
+  { value: "+1.500", label: "clientes atendidos", icon: "users" },
   { value: "Entregas", label: "rápidas e programadas", icon: "truck" },
   { value: "2", label: "unidades estratégicas", icon: "pin" },
 ];
@@ -295,26 +288,26 @@ export const operationHighlights = [
 
 export type ClientLogo = {
   name: string;
-  /** Caminho do logo em /public/clients. Sem arquivo real = placeholder. */
-  src?: string;
-  pending?: boolean;
+  /** logo branco com fundo transparente em /public/partners */
+  src: string;
+  width: number;
+  height: number;
 };
 
-/**
- * PLACEHOLDER: nenhum logo real de cliente foi encontrado nos arquivos.
- * Substituir por logos reais (PNG/SVG monocromático branco) em /public/clients.
- */
+/** Clientes/parceiros — logos reais fornecidos pelo cliente (public/partners). */
 export const clients: ClientLogo[] = [
-  { name: "Cliente 1", pending: true },
-  { name: "Cliente 2", pending: true },
-  { name: "Cliente 3", pending: true },
-  { name: "Cliente 4", pending: true },
-  { name: "Cliente 5", pending: true },
-  { name: "Cliente 6", pending: true },
+  { name: "Carrefour", src: "/partners/carrefour.png", width: 900, height: 670 },
+  { name: "Assaí Atacadista", src: "/partners/assai.png", width: 900, height: 654 },
+  { name: "Costa Atacadão", src: "/partners/costa-atacadao.png", width: 900, height: 372 },
+  { name: "Atacadão Dia a Dia", src: "/partners/atacadao-dia-a-dia.png", width: 900, height: 377 },
+  { name: "Atacadão", src: "/partners/atacadao.png", width: 900, height: 217 },
+  { name: "Pão de Açúcar", src: "/partners/pao-de-acucar.png", width: 900, height: 601 },
 ];
 
-export const aboutHighlights: { icon: IconName; title: string; text: string }[] = [
-  { icon: "award", title: "Experiência", text: "no atacado de frutas" },
+/** Diferenciais de "Quem somos" — "seal" usa o símbolo oficial (produção própria) */
+export const aboutHighlights: { icon: IconName | "seal"; title: string; text: string }[] = [
+  { icon: "award", title: "+10 anos de mercado", text: "experiência no atacado de frutas" },
+  { icon: "seal", title: "Produção própria", text: "controle de qualidade desde a origem" },
   { icon: "users", title: "Atendimento", text: "dedicado e direto" },
   { icon: "check", title: "Foco total", text: "na satisfação do cliente" },
 ];

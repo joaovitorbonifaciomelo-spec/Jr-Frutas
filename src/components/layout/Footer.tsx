@@ -1,9 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
-import { developerCredit, nav, products, quoteWhatsappLink, site, units } from "@/data/site";
+import { developerCredit, nav, products, quoteWhatsappLink, site, unitMessage, units, unitWhatsappLink } from "@/data/site";
 import { ButtonLink } from "@/components/ui/Button";
 import { Logo } from "@/components/ui/Logo";
-import { Facebook, Instagram, WhatsApp } from "@/components/ui/Icons";
+import { Instagram, WhatsApp } from "@/components/ui/Icons";
 
 const year = new Date().getFullYear();
 
@@ -15,9 +15,8 @@ export function Footer() {
         <div className="grid grid-cols-2 gap-10 lg:grid-cols-12">
           <div className="lg:col-span-4">
             <Logo variant="stacked" height={96} href={null} />
-            <p className="mt-6 max-w-[26ch] text-[0.9rem] leading-relaxed text-white/70">
-              Qualidade que começa no campo. Confiança que chega ao seu negócio.
-            </p>
+            <p className="eyebrow mt-6 text-white/85">Cultivando Qualidade.</p>
+            <p className="mt-3 max-w-[28ch] text-[0.9rem] leading-relaxed text-white/60">{site.tagline}</p>
             <Social className="mt-6" />
           </div>
 
@@ -36,18 +35,26 @@ export function Footer() {
 
           <div className="lg:col-span-3">
             <h3 className="eyebrow mb-5 text-white">Unidades</h3>
-            <ul className="space-y-5 text-[0.9rem] text-white/70">
+            <ul className="space-y-6 text-[0.9rem] text-white/70">
               {units.map((u) => (
                 <li key={u.id}>
-                  <p className="font-bold text-white">{u.name}</p>
+                  <p className="font-display font-bold text-white">{u.name}</p>
                   <a
-                    href={`tel:${u.phone.replace(/\D/g, "")}`}
-                    data-pending={u.phonePending ? "" : undefined}
-                    className="block transition-colors hover:text-white"
+                    href={unitWhatsappLink(u, unitMessage(u.city)) ?? `tel:${u.phoneE164}`}
+                    target="_blank"
+                    rel="noopener"
+                    aria-label={`WhatsApp ${u.name}: ${u.phone}`}
+                    className="mt-1 inline-flex items-center gap-2 font-bold text-white transition-colors hover:text-white/80"
                   >
-                    {u.phone}
+                    <WhatsApp size={14} /> {u.phone}
                   </a>
-                  <p data-pending={u.addressPending ? "" : undefined}>{u.address}</p>
+                  <p className="mt-1.5 leading-relaxed">
+                    {u.addressLines.map((l) => (
+                      <span key={l} className="block">
+                        {l}
+                      </span>
+                    ))}
+                  </p>
                 </li>
               ))}
             </ul>
@@ -65,13 +72,16 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-14 flex items-center justify-between border-t border-white/10 pt-6 text-[0.75rem] text-white/50">
-          <p>© {year} {site.name}. Todos os direitos reservados.</p>
-          <Link href="/politica-de-privacidade" className="transition-colors hover:text-white">
-            Política de Privacidade
-          </Link>
+        <div className="mt-14 flex flex-wrap items-center justify-between gap-x-8 gap-y-3 border-t border-white/10 pt-6 text-[0.75rem] text-white/50">
+          <p>
+            © {year} {site.name}. Todos os direitos reservados.
+            <span className="mx-2 text-white/25">·</span>
+            <Link href="/politica-de-privacidade" className="transition-colors hover:text-white">
+              Política de Privacidade
+            </Link>
+          </p>
+          <DeveloperCredit />
         </div>
-        <DeveloperCredit className="mt-6 border-t border-white/10 pt-5" />
       </div>
 
       {/* ---------- MOBILE (muito mais simples) ---------- */}
@@ -103,9 +113,6 @@ function Social({ className = "" }: { className?: string }) {
     <div className={`flex items-center gap-2.5 ${className}`}>
       <a href={site.social.instagram.href} aria-label="Instagram" data-pending={site.social.instagram.pending ? "" : undefined} className={item} target="_blank" rel="noopener">
         <Instagram size={17} />
-      </a>
-      <a href={site.social.facebook.href} aria-label="Facebook" data-pending={site.social.facebook.pending ? "" : undefined} className={item} target="_blank" rel="noopener">
-        <Facebook size={17} />
       </a>
       <a href={quoteWhatsappLink()} aria-label="WhatsApp" className={item} target="_blank" rel="noopener">
         <WhatsApp size={17} />

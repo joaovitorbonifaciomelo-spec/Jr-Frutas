@@ -35,15 +35,24 @@ export function About() {
               </p>
             </Reveal>
             <Reveal delay={150}>
-              <ul className="mt-8 grid gap-5 sm:grid-cols-3">
-                {aboutHighlights.map((h) => (
-                  <li key={h.title} className="flex items-center gap-3 sm:flex-col sm:items-start">
-                    <span className="grid size-10 shrink-0 place-items-center rounded-full border border-black/20">
-                      <Icon name={h.icon} size={18} />
-                    </span>
+              <ul className="mt-8 grid gap-4 sm:grid-cols-2">
+                {aboutHighlights.map((h, i) => (
+                  <li
+                    key={h.title}
+                    className={`flex items-center gap-3 rounded-[var(--radius-pill)] border p-3.5 ${
+                      i === 0 ? "border-black bg-black text-white" : "border-black/10 bg-white"
+                    }`}
+                  >
+                    {h.icon === "seal" ? (
+                      <Image src="/brand/symbol-black.png" alt="" width={512} height={512} className="size-11 shrink-0" />
+                    ) : (
+                      <span className={`grid size-11 shrink-0 place-items-center rounded-full border ${i === 0 ? "border-white/40 bg-white text-black" : "border-black/20"}`}>
+                        <Icon name={h.icon} size={20} />
+                      </span>
+                    )}
                     <p className="text-[0.86rem] leading-snug">
-                      <span className="block font-extrabold">{h.title}</span>
-                      <span className="text-black/65">{h.text}</span>
+                      <span className={`block font-display font-extrabold ${i === 0 ? "text-[1.05rem]" : ""}`}>{h.title}</span>
+                      <span className={i === 0 ? "text-white/70" : "text-black/65"}>{h.text}</span>
                     </p>
                   </li>
                 ))}
